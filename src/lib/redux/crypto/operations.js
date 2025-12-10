@@ -1,6 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchCryptos } from "@/api/fetchCryptos";
-const API_KEYS = process.env.NEXT_PUBLIC_COINGECKO_API_KEYS.split(",");
 let keyIndex = 0;
 export const fetchAllCryptos = createAsyncThunk(
   "cryptos/fetchAllCryptos",
@@ -14,9 +13,8 @@ export const fetchAllCryptos = createAsyncThunk(
         } catch (e) {
           if (
             e.response?.data?.status?.error_message?.includes("API Key Missing")
-          ) {
+          )
             keyIndex++;
-          }
         }
       }
       return data;

@@ -1,4 +1,3 @@
-"use client";
 import SearchInput from "@/shared/search-input/SearchInput";
 import Suggestions from "@/shared/suggestions/Suggestions";
 

@@ -22,11 +22,6 @@ const finderSlice = createSlice({
       },
     },
   },
-  //   extraReducers: (builder) => {
-  //     builder.addCase(fetchSuggestions.fulfilled, (state, action) => {
-  //       state.suggestions = action.payload;
-  //     });
-  //   },
 });
 export const { handleChangeQuery, resetQuery, resetSuggestions } =
   finderSlice.actions;
