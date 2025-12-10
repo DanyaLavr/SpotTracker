@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/navigation";
 import styles from "./CloseModalButton.module.css";
 export default function CloseModalButton({ className }) {

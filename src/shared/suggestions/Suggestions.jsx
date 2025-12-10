@@ -1,3 +1,4 @@
+"use client";
 import { useQuery } from "@/hooks/useQuery";
 import { selectCryptos } from "@/lib/redux/crypto/selectors";
 

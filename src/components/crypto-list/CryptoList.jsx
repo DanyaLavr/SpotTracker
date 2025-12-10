@@ -4,12 +4,11 @@ import {
   selectCryptosIsLoading,
 } from "@/lib/redux/crypto/selectors";
 import { usePathname, useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import CryptoItem from "./CryptoItem";
 import Loader from "@/shared/loader/Loader";
 import { selectBackpack } from "@/lib/redux/user/selectors";
 import BackpackItem from "../backpack-item/BackpackItem";
-import { updateCryptoInBackpack } from "@/lib/redux/user/operations";
 
 export default function CryptoList() {
   const data = usePathname();
