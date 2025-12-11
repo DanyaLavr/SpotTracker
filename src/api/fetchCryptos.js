@@ -12,7 +12,5 @@ export const fetchCryptos = async (page, apiKeyId) => {
     const nextPageData = await fetchCryptos(page + 1, apiKeyId);
     data.push(...nextPageData);
   }
-  console.log("res", res);
-
   return data;
 };

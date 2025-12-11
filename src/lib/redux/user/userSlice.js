@@ -6,7 +6,6 @@ import {
 } from "@reduxjs/toolkit";
 import { USER_STATE } from "./constants";
 import {
-  addCryptoInBackpack,
   getBackpack,
   loginUser,
   registerUser,
@@ -28,7 +27,6 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getBackpack.fulfilled, (state, action) => {
-        console.log(action.payload);
         state.user.backpack = action.payload;
       })
       .addCase(getBackpack.rejected, (state) => {

@@ -54,7 +54,6 @@ export default function PurchaseForm() {
   useEffect(() => {
     if (!pathname.includes("/purchase")) return;
     const fetchData = async () => {
-      console.log("calling getBackpack ");
       if (!backpackCrypto) await dispatch(getBackpack(uid));
     };
     fetchData();

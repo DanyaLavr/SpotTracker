@@ -6,7 +6,7 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import cleanPrice from "@/funcs/cleanPrice";
 import getNewPrice from "@/funcs/getNewPrice";
 import { fetchUserBackpack } from "@/api/fetchUserBackpack";
@@ -32,13 +32,10 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
-      // const backpack = await fetchUserBackpack(user.user.uid);
-      // console.log(backpack);
       return {
         uid: user.user.uid,
         email: user.user.email,
         login: user.user.displayName,
-        // backpack,
       };
     } catch (e) {
       return rejectWithValue(e.message);
@@ -82,7 +79,6 @@ export const addCryptoInBackpack = createAsyncThunk(
 export const updateCryptoInBackpack = createAsyncThunk(
   "user/updateCryptoInBackpack",
   async ({ id, data }, { getState, rejectWithValue }) => {
-    console.log(data);
     try {
       const state = getState();
       const prevBackpack = state.user.user.backpack;
