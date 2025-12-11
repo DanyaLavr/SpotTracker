@@ -2,12 +2,16 @@
 import { purchaseInitialValues, purchaseSchema } from "@/lib/formik/constants";
 import FormItem from "@/lib/formik/FormItem";
 import { selectCryptoById } from "@/lib/redux/crypto/selectors";
-import { updateCryptoInBackpack } from "@/lib/redux/user/operations";
-import { selectUser } from "@/lib/redux/user/selectors";
+import {
+  getBackpack,
+  updateCryptoInBackpack,
+} from "@/lib/redux/user/operations";
+import { selectBackpack, selectUser } from "@/lib/redux/user/selectors";
 import Button from "@/shared/buttons/Button";
 import Loader from "@/shared/loader/Loader";
 import { Form, Formik } from "formik";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, usePathname, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const inputs = [
@@ -25,7 +29,9 @@ const inputs = [
 
 export default function PurchaseForm() {
   const { coin_id } = useParams();
+  const pathname = usePathname();
   const { uid } = useSelector(selectUser);
+  const backpackCrypto = useSelector(selectBackpack);
   const selectedCrypto = useSelector(selectCryptoById(coin_id)) || {};
   const dispatch = useDispatch();
   const router = useRouter();
@@ -45,7 +51,14 @@ export default function PurchaseForm() {
     );
     router.back();
   };
-
+  useEffect(() => {
+    if (!pathname.includes("/purchase")) return;
+    const fetchData = async () => {
+      console.log("calling getBackpack ");
+      if (!backpackCrypto) await dispatch(getBackpack(uid));
+    };
+    fetchData();
+  }, [pathname, dispatch, uid]);
   if (!crypto || !crypto.coin_id)
     return (
       <Loader

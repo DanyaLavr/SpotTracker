@@ -28,10 +28,11 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getBackpack.fulfilled, (state, action) => {
+        console.log(action.payload);
         state.user.backpack = action.payload;
       })
       .addCase(getBackpack.rejected, (state) => {
-        state.user.backpack = [];
+        // state.user.backpack = [];
       })
       .addCase(updateCryptoInBackpack.fulfilled, (state, action) => {
         const { isNew, data } = action.payload;
