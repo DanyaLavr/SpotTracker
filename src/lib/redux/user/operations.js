@@ -6,16 +6,10 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import {
-  arrayUnion,
-  count,
-  doc,
-  getDoc,
-  setDoc,
-  updateDoc,
-} from "firebase/firestore";
+import { arrayUnion, doc, setDoc, updateDoc } from "firebase/firestore";
 import cleanPrice from "@/funcs/cleanPrice";
 import getNewPrice from "@/funcs/getNewPrice";
+import { fetchUserBackpack } from "@/api/fetchUserBackpack";
 
 export const registerUser = createAsyncThunk(
   "user/registerUser",
@@ -35,15 +29,13 @@ export const registerUser = createAsyncThunk(
 
 export const loginUser = createAsyncThunk(
   "user/loginUser",
-  async ({ email, password }, { rejectWithValue, dispatch }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
-      const backpack = await dispatch(getBackpack(user.user.uid));
       return {
         uid: user.user.uid,
         email: user.user.email,
         login: user.user.displayName,
-        backpack,
       };
     } catch (e) {
       return rejectWithValue(e.message);
@@ -54,14 +46,8 @@ export const getBackpack = createAsyncThunk(
   "user/getBackpack",
   async (id, { rejectWithValue }) => {
     try {
-      const docRef = doc(db, "backpack", id);
-      const docSnap = await getDoc(docRef);
-
-      if (!docSnap.exists()) {
-        return rejectWithValue("Backpack not found");
-      }
-      const data = docSnap.data()?.data || [];
-      return [...data];
+      const res = await fetchUserBackpack(id);
+      return res;
     } catch (e) {
       return rejectWithValue(e.message);
     }
@@ -93,7 +79,6 @@ export const addCryptoInBackpack = createAsyncThunk(
 export const updateCryptoInBackpack = createAsyncThunk(
   "user/updateCryptoInBackpack",
   async ({ id, data }, { getState, rejectWithValue }) => {
-    console.log(data);
     try {
       const state = getState();
       const prevBackpack = state.user.user.backpack;

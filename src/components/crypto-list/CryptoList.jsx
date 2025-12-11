@@ -4,16 +4,20 @@ import {
   selectCryptosIsLoading,
 } from "@/lib/redux/crypto/selectors";
 import { usePathname, useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import CryptoItem from "./CryptoItem";
 import Loader from "@/shared/loader/Loader";
-import { selectBackpack } from "@/lib/redux/user/selectors";
+import { selectBackpack, selectUser } from "@/lib/redux/user/selectors";
 import BackpackItem from "../backpack-item/BackpackItem";
+import { useEffect } from "react";
+import { getBackpack } from "@/lib/redux/user/operations";
 
 export default function CryptoList() {
   const data = usePathname();
   const allCryptos = useSelector(selectCryptos);
   const backpackCrypto = useSelector(selectBackpack);
+  const user = useSelector(selectUser);
+  const dispatch = useDispatch();
   const cryptos =
     data === "/" ? allCryptos : data === "/backpack" ? backpackCrypto : [];
   const isLoading = useSelector(selectCryptosIsLoading);
@@ -23,6 +27,13 @@ export default function CryptoList() {
     if (e.target.closest("button"))
       router.push(`/purchase/${e.target.dataset.id}`);
   };
+  useEffect(() => {
+    if (data !== "/backpack") return;
+    const fetchData = async () => {
+      if (!backpackCrypto) await dispatch(getBackpack(user.uid));
+    };
+    fetchData();
+  }, [data, backpackCrypto, dispatch, user]);
   return (
     <>
       {isLoading && (

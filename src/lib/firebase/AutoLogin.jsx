@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase/auth";
 import { useDispatch } from "react-redux";
-import { getBackpack, loginUser } from "../redux/user/operations";
+import { loginUser } from "../redux/user/operations";
 
 export default function AutoLogin() {
   const dispatch = useDispatch();
@@ -18,8 +18,6 @@ export default function AutoLogin() {
             login: user.displayName,
           })
         );
-
-        dispatch(getBackpack(user.uid));
       }
     });
   }, []);

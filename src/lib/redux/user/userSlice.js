@@ -6,7 +6,6 @@ import {
 } from "@reduxjs/toolkit";
 import { USER_STATE } from "./constants";
 import {
-  addCryptoInBackpack,
   getBackpack,
   loginUser,
   registerUser,
@@ -31,7 +30,7 @@ const userSlice = createSlice({
         state.user.backpack = action.payload;
       })
       .addCase(getBackpack.rejected, (state) => {
-        state.user.backpack = [];
+        // state.user.backpack = [];
       })
       .addCase(updateCryptoInBackpack.fulfilled, (state, action) => {
         const { isNew, data } = action.payload;
