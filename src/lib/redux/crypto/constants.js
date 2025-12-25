@@ -1,5 +1,5 @@
 export const CRYPTOS = {
   items: [],
-  isLoading: true,
+  isLoading: false,
   error: null,
 };

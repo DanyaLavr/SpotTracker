@@ -1,14 +1,13 @@
 import CryptoList from "@/components/crypto-list/CryptoList";
 import Section from "@/shared/section/Section";
-
-import PrivateRoute from "@/shared/private-route/PrivateRoute";
+import { Suspense } from "react";
 
 export default function Backpack() {
   return (
-    <PrivateRoute>
-      <Section>
+    <Section>
+      <Suspense>
         <CryptoList />
-      </Section>
-    </PrivateRoute>
+      </Suspense>
+    </Section>
   );
 }

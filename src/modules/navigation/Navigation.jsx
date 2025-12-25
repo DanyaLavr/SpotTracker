@@ -12,7 +12,7 @@ export default function Navigation() {
           <Link href="/">Home</Link>
         </li>
         <li>
-          <Link href={user ? `/backpack` : "/login"}>Backpack</Link>
+          <Link href={`/backpack`}>Backpack</Link>
         </li>
         {!user && (
           <li>

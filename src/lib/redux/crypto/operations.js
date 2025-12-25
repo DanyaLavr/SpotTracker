@@ -3,7 +3,7 @@ import { fetchCryptos } from "@/api/fetchCryptos";
 let keyIndex = 0;
 export const fetchAllCryptos = createAsyncThunk(
   "cryptos/fetchAllCryptos",
-  async (_, thunkAPI) => {
+  async (_, { rejectWithValue }) => {
     try {
       let data;
       while (true) {
@@ -20,7 +20,7 @@ export const fetchAllCryptos = createAsyncThunk(
       }
       return data;
     } catch (e) {
-      return thunkAPI.rejectWithValue(e.message);
+      return rejectWithValue(e.message);
     }
   }
 );

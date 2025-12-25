@@ -8,6 +8,7 @@ import { USER_STATE } from "./constants";
 import {
   getBackpack,
   loginUser,
+  logoutUser,
   registerUser,
   updateCryptoInBackpack,
 } from "./operations";
@@ -57,6 +58,7 @@ const userSlice = createSlice({
       .addCase(updateCryptoInBackpack.rejected, (state, action) => {
         console.error(action.payload);
       })
+      .addCase(logoutUser.fulfilled, () => USER_STATE)
       .addMatcher(isPending(registerUser, loginUser), (state) => {
         state.isLoadingUser = true;
         state.errorUser = null;
@@ -70,5 +72,5 @@ const userSlice = createSlice({
       });
   },
 });
-export const { autoLogin, logout } = userSlice.actions;
+export const { autoLogin } = userSlice.actions;
 export const userReducer = userSlice.reducer;
