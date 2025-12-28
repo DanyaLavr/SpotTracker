@@ -4,9 +4,10 @@ import Loader from "@/shared/loader/Loader";
 import Section from "@/shared/section/Section";
 import { Suspense } from "react";
 
-export default async function Home() {
-  const cryptos = getNextCrypto();
+export const revalidate = 300;
 
+export default async function Home() {
+  const cryptos = await getNextCrypto();
   return (
     <Section>
       <Suspense fallback={<Loader />}>
