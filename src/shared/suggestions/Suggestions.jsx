@@ -7,10 +7,9 @@ import { useSelector } from "react-redux";
 import SuggestionsItem from "./SuggestionsItem";
 import { useRouter } from "next/navigation";
 
-export default function Suggestions() {
+export default function Suggestions({ cryptos }) {
   const searchQuery = useQuery();
   const router = useRouter();
-  const cryptos = useSelector(selectCryptos);
 
   const suggestions = useMemo(() => {
     if (!searchQuery) return [];

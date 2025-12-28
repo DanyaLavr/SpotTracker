@@ -1,4 +1,4 @@
-"use client";
+// "use client";
 
 import { selectCryptos } from "@/lib/redux/crypto/selectors";
 import { useSelector } from "react-redux";
@@ -9,11 +9,12 @@ export default function BackpackItem({
   coin_id,
   count,
   invested,
+  currentCrypto,
 }) {
-  const allCryptos = useSelector(selectCryptos);
-  const currentCrypto = allCryptos?.find((elem) => elem.coin_id === coin_id);
+  // const allCryptos = useSelector(selectCryptos);
+  // const currentCrypto = allCryptos?.find((elem) => elem.coin_id === coin_id);
 
-  const getGrowthPercent = ((currentCrypto?.last - price) / price) * 100;
+  const getGrowthPercent = ((currentCrypto?.last - +price) / +price) * 100;
   const isPositive = getGrowthPercent > 0;
   const profit = invested * (getGrowthPercent / 100);
 

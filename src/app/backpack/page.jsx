@@ -1,12 +1,16 @@
+import { getNextCrypto } from "@/api/getNextCrypto";
 import CryptoList from "@/components/crypto-list/CryptoList";
+import Loader from "@/shared/loader/Loader";
 import Section from "@/shared/section/Section";
 import { Suspense } from "react";
 
-export default function Backpack() {
+export default async function Backpack() {
+  const cryptos = getNextCrypto();
+
   return (
     <Section>
-      <Suspense>
-        <CryptoList />
+      <Suspense fallback={<Loader />}>
+        <CryptoList cryptos={cryptos} />
       </Suspense>
     </Section>
   );

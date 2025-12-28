@@ -9,6 +9,9 @@ const cryptosSlice = createSlice({
     addLoading: (state) => {
       state.isLoading = true;
     },
+    addAllCrypto: (state, action) => {
+      state.items = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -28,5 +31,5 @@ const cryptosSlice = createSlice({
   },
 });
 
-export const { addLoading } = cryptosSlice.actions;
+export const { addLoading, addAllCrypto } = cryptosSlice.actions;
 export const cryptosReducer = cryptosSlice.reducer;

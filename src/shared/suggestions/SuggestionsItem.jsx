@@ -1,4 +1,5 @@
 "use client";
+import Image from "next/image";
 import { useState } from "react";
 
 export default function SuggestionsItem({ elem }) {
@@ -11,10 +12,12 @@ export default function SuggestionsItem({ elem }) {
       data-id={`${coin_id}-suggestion`}
     >
       {isShow && (
-        <img
+        <Image
           className="aspect-square w-7 mr-5"
+          width={25}
+          height={25}
           src={`https://cryptologos.cc/logos/${coin_id}-${base.toLowerCase()}-logo.png?v=040`}
-          alt=""
+          alt={base}
           onError={() => setIsShow(false)}
         />
       )}

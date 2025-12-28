@@ -9,7 +9,7 @@ export default function RootLayout({ children, modal }) {
     <html lang="en">
       <body>
         <ReduxProvider>
-          <CryptoLoader />
+          {/* <CryptoLoader /> */}
           <AutoLogin />
           <Header />
           <main className="flex h-screen">
