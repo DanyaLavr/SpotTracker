@@ -9,6 +9,7 @@ import BackpackItem from "../backpack-item/BackpackItem";
 import { useEffect, useMemo } from "react";
 import { getBackpack } from "@/lib/redux/user/operations";
 import { addAllCryptos } from "@/lib/redux/crypto/cryptosSlice";
+
 export default function CryptoList({ cryptos }) {
   const data = usePathname();
   const backpackCrypto = useSelector(selectBackpack);

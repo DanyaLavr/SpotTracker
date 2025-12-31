@@ -1,7 +1,6 @@
+import { configureStore } from "@reduxjs/toolkit";
+import { cryptosReducer } from "./crypto/cryptosSlice";
 import { userReducer } from "./user/userSlice";
-
-const { configureStore } = require("@reduxjs/toolkit");
-const { cryptosReducer } = require("./crypto/cryptosSlice");
 
 export const store = configureStore({
   reducer: {
