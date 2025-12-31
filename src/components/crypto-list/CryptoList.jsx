@@ -46,7 +46,7 @@ export default function CryptoList({ cryptos }) {
   useEffect(() => {
     dispatch(addAllCryptos(cryptos));
   }, [dispatch, cryptos]);
-  if (!cryptos) {
+  if (!filteredCryptos) {
     return (
       <Loader
         color="#fff"
