@@ -4,21 +4,13 @@ import { NextResponse } from "next/server";
 // This function can be marked `async` if using `await` inside
 export async function proxy(request) {
   const cookieStore = await cookies();
-  const session = cookieStore.get("session");
-  //* сокращаем синтаксис
+  // const session = cookieStore.get("session");
+  const session = request.cookies.get("session")?.value;
   const { pathname } = request.nextUrl;
 
   if (!session) {
-    //* не работает
     if (pathname === "/backpack" || pathname.startsWith("/backpack/"))
       return NextResponse.redirect(new URL("/login", request.url));
-
-    //* работает
-    // if (!session && request.nextUrl.pathname.startsWith("/backpack")) {
-    //   return NextResponse.redirect(new URL("/login", request.url));
-    // }
-
-    //* работает
     if (pathname === "/purchase" || pathname.startsWith("/purchase/"))
       return NextResponse.redirect(new URL("/login", request.url));
   }
