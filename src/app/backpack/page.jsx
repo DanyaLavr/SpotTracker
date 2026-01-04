@@ -5,8 +5,6 @@ import { getCryptos } from "@/api/getCrypto";
 import CryptoList from "@/components/crypto-list/CryptoList";
 import Section from "@/shared/section/Section";
 
-export const revalidate = 300;
-
 export default async function Backpack() {
   const cryptos = await getCryptos();
 
