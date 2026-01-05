@@ -23,7 +23,7 @@ export const registerUser = createAsyncThunk(
     try {
       const user = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(user.user, { displayName: login });
-      const token = await getIdToken(user);
+      const token = await getIdToken(user.user);
       await axios.post("/api/auth/login", { token });
 
       return { uid: user.user.uid, email, login, backpack: [] };
@@ -38,7 +38,7 @@ export const loginUser = createAsyncThunk(
   async ({ email, password }, { rejectWithValue }) => {
     try {
       const user = await signInWithEmailAndPassword(auth, email, password);
-      const token = await getIdToken(user);
+      const token = await getIdToken(user.user);
 
       await axios.post("/api/auth/login", { token });
       return {
