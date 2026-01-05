@@ -21,6 +21,7 @@ export default function UserInfo() {
         className="h-full border-2 py-0 px-9 rounded-2xl"
         onClick={async () => {
           await dispatch(logoutUser()).unwrap();
+          router.replace("/");
           router.refresh();
         }}
       >
