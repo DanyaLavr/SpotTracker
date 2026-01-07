@@ -1,4 +1,4 @@
-import { db } from "@/lib/firebase/db";
+import { db } from "@/shared/lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
 export const fetchUserBackpack = async (id) => {
   const docRef = doc(db, "backpack", id);
