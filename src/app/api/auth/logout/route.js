@@ -5,6 +5,8 @@ export async function DELETE() {
     const response = NextResponse.json({ success: true });
     response.cookies.delete("session", {
       httpOnly: true,
+      secure: true,
+      sameSite: "strict",
       path: "/",
     });
 

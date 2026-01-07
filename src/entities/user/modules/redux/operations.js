@@ -1,5 +1,5 @@
-import { auth } from "@/lib/firebase/auth";
-import { db } from "@/lib/firebase/db";
+import { auth } from "../../libs/firebase/auth";
+import { db } from "../../libs/firebase/db";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,

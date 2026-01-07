@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 
 import { ReduxProvider } from "@/store";
-import AutoLogin from "@/lib/firebase/AutoLogin";
+import AutoLogin from "@/entities/user/libs/firebase";
 import Aside from "@/widgets/aside";
 import Header from "@/widgets/header";
 
