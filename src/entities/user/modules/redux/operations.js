@@ -14,6 +14,7 @@ import getNewPrice from "@/entities/crypto/modules/getNewPrice";
 import { fetchUserBackpack } from "../../api/fetchUserBackpack";
 
 import axios from "axios";
+import { getPrevBackpack } from "../getPrevBackpack";
 
 export const registerUser = createAsyncThunk(
   "user/registerUser",
@@ -98,16 +99,11 @@ export const addCryptoInBackpack = createAsyncThunk(
     }
   }
 );
-export const updateCryptoInBackpack = createAsyncThunk(
-  "user/updateCryptoInBackpack",
+export const updateBackpackOnPurchase = createAsyncThunk(
+  "user/updateBackpackOnPurchase",
   async ({ id, data }, { getState, rejectWithValue }) => {
     try {
-      const state = getState();
-      const prevBackpack = state.user.user.backpack;
-
-      const indexOfCrypto = prevBackpack.findIndex(
-        (elem) => elem.coin_id === data.coin_id
-      );
+      const [prevBackpack, indexOfCrypto] = getPrevBackpack(getState, data);
       const newData = [...prevBackpack];
 
       if (indexOfCrypto !== -1) {
@@ -125,6 +121,37 @@ export const updateCryptoInBackpack = createAsyncThunk(
         data: newData,
       });
       return { isNew: indexOfCrypto === -1 ? true : false, data };
+    } catch (e) {
+      return rejectWithValue(e.message);
+    }
+  }
+);
+export const updateBackpackOnSell = createAsyncThunk(
+  "user/updateBackpackOnSell",
+  async ({ id, data }, { getState, rejectWithValue }) => {
+    try {
+      const [prevBackpack, indexOfCrypto] = getPrevBackpack(getState, data);
+      const newData = [...prevBackpack];
+
+      const prevCrypto = prevBackpack[indexOfCrypto];
+
+      if (indexOfCrypto === -1)
+        throw new Error("You haven't this crypto in backpack");
+
+      if (data.count > prevCrypto.count)
+        throw new Error(`Count can't be more then ${prevCrypto.count}`);
+
+      newData[indexOfCrypto] = {
+        ...prevCrypto,
+        count: prevCrypto.count - data.count,
+        price: prevCrypto.price,
+        invested: prevCrypto.invested - prevCrypto.price * data.count,
+      };
+
+      await setDoc(doc(db, "backpack", id), {
+        data: newData,
+      });
+      return { data };
     } catch (e) {
       return rejectWithValue(e.message);
     }

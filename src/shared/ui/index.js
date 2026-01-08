@@ -1,4 +1,5 @@
 export { default as AuthForm } from "./auth-form";
+export { default as TradeCryptoForm } from "./trade-crypto-form";
 export * from "./buttons";
 export { default as FormItem } from "./form-item";
 export { default as Loader } from "./loader";

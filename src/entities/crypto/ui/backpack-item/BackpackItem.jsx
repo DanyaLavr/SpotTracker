@@ -38,13 +38,22 @@ export default function BackpackItem({
           </span>
         </p>
       </div>
-
-      <button
-        className="mt-4 py-3 bg-stone-800 hover:bg-stone-700 text-stone-50 rounded-md text-sm transition-colors cursor-pointer"
-        data-id={coin_id}
-      >
-        Purchase
-      </button>
+      <div className="flex gap-3">
+        <button
+          className="mt-4 py-3 bg-stone-800 hover:bg-stone-700 text-stone-50 rounded-md text-sm transition-colors cursor-pointer"
+          data-id={coin_id}
+          data-action="purchase"
+        >
+          Purchase
+        </button>
+        <button
+          className="mt-4 py-3 bg-stone-800 hover:bg-stone-700 text-stone-50 rounded-md text-sm transition-colors cursor-pointer"
+          data-id={coin_id}
+          data-action="sell"
+        >
+          Sell
+        </button>
+      </div>
     </li>
   );
 }

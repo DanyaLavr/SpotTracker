@@ -12,6 +12,7 @@ const CryptoItem = memo(function CryptoItem({ base, target, last, coin_id }) {
       <button
         className="mt-2 py-1 bg-stone-800 hover:bg-stone-700 text-stone-50 rounded-md text-sm transition-colors cursor-pointer"
         data-id={coin_id}
+        data-action="purchase"
       >
         Purchase
       </button>

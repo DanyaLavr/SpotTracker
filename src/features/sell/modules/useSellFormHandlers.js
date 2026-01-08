@@ -1,10 +1,10 @@
 import { selectCryptoById } from "@/entities/crypto/modules/redux/selectors";
-import { updateBackpackOnPurchase } from "@/entities/user/modules/redux/operations";
+import { updateBackpackOnSell } from "@/entities/user/modules/redux/operations";
 import { selectUser } from "@/entities/user/modules/redux/selectors";
 import { useParams, useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 
-export const usePurchaseFormHandlers = () => {
+export const useSellFormHandlers = () => {
   const dispatch = useDispatch();
   const router = useRouter();
   const { uid } = useSelector(selectUser);
@@ -13,14 +13,14 @@ export const usePurchaseFormHandlers = () => {
 
   const handleSubmit = (values) => {
     dispatch(
-      updateBackpackOnPurchase({
+      updateBackpackOnSell({
         id: uid,
         data: {
           coin_id,
           base: selectedCrypto.base,
           price: Number(values.price),
           count: Number(values.count),
-          invested: Number(values.invested),
+          sellAmount: Number(values.sellAmount),
         },
       })
     );

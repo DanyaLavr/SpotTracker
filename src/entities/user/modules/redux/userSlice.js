@@ -10,7 +10,8 @@ import {
   loginUser,
   logoutUser,
   registerUser,
-  updateCryptoInBackpack,
+  updateBackpackOnPurchase,
+  updateBackpackOnSell,
 } from "./operations";
 import cleanPrice from "@/entities/crypto/modules/cleanPrice";
 import getNewPrice from "@/entities/crypto/modules/getNewPrice";
@@ -39,7 +40,7 @@ const userSlice = createSlice({
         state.isLoadingBackpack = false;
         state.errorBackpack = action.payload;
       })
-      .addCase(updateCryptoInBackpack.fulfilled, (state, action) => {
+      .addCase(updateBackpackOnPurchase.fulfilled, (state, action) => {
         const { isNew, data } = action.payload;
         if (isNew) state.user.backpack.push(data);
         else
@@ -55,7 +56,26 @@ const userSlice = createSlice({
             return elem;
           });
       })
-      .addCase(updateCryptoInBackpack.rejected, (state, action) => {
+      .addCase(updateBackpackOnPurchase.rejected, (state, action) => {
+        console.error(action.payload);
+      })
+      .addCase(updateBackpackOnSell.fulfilled, (state, action) => {
+        const { data } = action.payload;
+        // if (isNew) state.user.backpack.push(data);
+        // else
+        state.user.backpack = state.user.backpack.map((elem) => {
+          if (elem.coin_id === data.coin_id) {
+            return {
+              ...elem,
+              count: elem.count - data.count,
+              price: elem.price,
+              invested: elem.invested + elem.price * data.count,
+            };
+          }
+          return elem;
+        });
+      })
+      .addCase(updateBackpackOnSell.rejected, (state, action) => {
         console.error(action.payload);
       })
       .addCase(logoutUser.fulfilled, () => USER_STATE)

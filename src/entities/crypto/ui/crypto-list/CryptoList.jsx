@@ -37,8 +37,14 @@ export default function CryptoList({ cryptos }) {
 
   const router = useRouter();
   const handleClick = (e) => {
-    if (e.target.closest("button"))
-      router.push(`/purchase/${e.target.dataset.id}`);
+    const target = e.target;
+    const id = target.dataset.id;
+
+    if (target.closest("button[data-action='purchase']"))
+      router.push(`/purchase/${id}`);
+
+    if (target.closest("button[data-action='sell']"))
+      router.push(`/sell/${id}`);
   };
   useEffect(() => {
     if (data !== "/backpack") return;
