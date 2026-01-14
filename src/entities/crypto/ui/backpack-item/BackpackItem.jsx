@@ -40,14 +40,14 @@ export default function BackpackItem({
       </div>
       <div className="flex gap-3">
         <button
-          className="mt-4 py-3 bg-stone-800 hover:bg-stone-700 text-stone-50 rounded-md text-sm transition-colors cursor-pointer"
+          className="mt-4 py-3 flex-2 bg-stone-800 hover:bg-stone-700 text-stone-50 rounded-md text-sm transition-colors cursor-pointer"
           data-id={coin_id}
           data-action="purchase"
         >
           Purchase
         </button>
         <button
-          className="mt-4 py-3 bg-stone-800 hover:bg-stone-700 text-stone-50 rounded-md text-sm transition-colors cursor-pointer"
+          className="mt-4 py-3 flex-1 bg-stone-800 hover:bg-stone-700 hover:border-red-800 hover:border-2 text-stone-50  rounded-md text-sm transition-colors cursor-pointer"
           data-id={coin_id}
           data-action="sell"
         >
