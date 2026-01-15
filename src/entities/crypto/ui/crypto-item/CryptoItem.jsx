@@ -4,7 +4,7 @@ import { memo } from "react";
 
 const CryptoItem = memo(function CryptoItem({ base, target, last, coin_id }) {
   return (
-    <li className="grid gap-4 p-4 bg-black text-stone-50 rounded-xl border border-gray-700 shadow-lg hover:scale-105 transition-transform">
+    <li className="grid flex-1 gap-4 p-4 bg-black text-stone-50 rounded-xl border border-gray-700 shadow-lg hover:scale-105 transition-transform">
       <h2 className="text-lg font-semibold">
         {base}/{target}
       </h2>

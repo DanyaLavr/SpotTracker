@@ -11,10 +11,10 @@ export default function BackpackItem({
   const profit = invested * (getGrowthPercent / 100);
 
   return (
-    <li className="grid gap-4 p-4 bg-black text-stone-50 rounded-xl border border-gray-700 shadow-lg hover:scale-105 transition-transform">
+    <li className="grid gap-4 w-full md:w-auto p-4 bg-black text-stone-50 rounded-xl border border-gray-700 shadow-lg hover:scale-105 transition-transform">
       <h2 className="text-2xl font-bold">{base}/USDT</h2>
 
-      <div className="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+      <div className="grid  md:grid-cols-2 gap-x-4 gap-y-2 text-sm">
         <p>Count: {count}</p>
         <p>Average Price: {price}$</p>
         <p>
@@ -40,14 +40,14 @@ export default function BackpackItem({
       </div>
       <div className="flex gap-3">
         <button
-          className="mt-4 py-3 bg-stone-800 hover:bg-stone-700 text-stone-50 rounded-md text-sm transition-colors cursor-pointer"
+          className="mt-4 py-3 flex-2 bg-stone-800 hover:bg-stone-700 text-stone-50 rounded-md text-sm transition-colors cursor-pointer"
           data-id={coin_id}
           data-action="purchase"
         >
           Purchase
         </button>
         <button
-          className="mt-4 py-3 bg-stone-800 hover:bg-stone-700 text-stone-50 rounded-md text-sm transition-colors cursor-pointer"
+          className="mt-4 py-3 flex-1 bg-stone-800 hover:bg-stone-700 hover:border-red-800 hover:border-2 text-stone-50  rounded-md text-sm transition-colors cursor-pointer"
           data-id={coin_id}
           data-action="sell"
         >

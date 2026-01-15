@@ -55,9 +55,8 @@ const TradeCryptoForm = ({ config, handlers, extraButtons = false }) => {
       {({ values, setFieldValue }) => (
         <Form className="grid gap-6">
           {inputs.map(({ name, placeholder, buttons }, idx) => (
-            <div className="">
+            <div className="" key={name}>
               <FormItem
-                key={name}
                 name={name}
                 placeholder={placeholder}
                 type="number"

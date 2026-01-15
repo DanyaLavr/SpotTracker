@@ -4,6 +4,7 @@ import { ReduxProvider } from "@/store";
 import AutoLogin from "@/entities/user/libs/firebase";
 import Aside from "@/widgets/aside";
 import Header from "@/widgets/header";
+import BurgerMenu from "@/features/navigation/burger-menu";
 
 export default function RootLayout({ children, modal }) {
   return (
@@ -15,6 +16,7 @@ export default function RootLayout({ children, modal }) {
           <main className="flex h-screen">
             <Aside />
             {children}
+            <BurgerMenu />
           </main>
           {modal}
         </ReduxProvider>

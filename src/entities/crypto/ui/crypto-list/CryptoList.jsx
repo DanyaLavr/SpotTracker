@@ -66,7 +66,10 @@ export default function CryptoList({ cryptos }) {
   }
   return (
     <>
-      <ul className="flex gap-6 flex-wrap" onClick={handleClick}>
+      <ul
+        className="grid grid-cols-1 sm:flex gap-6 flex-wrap"
+        onClick={handleClick}
+      >
         {data === "/" &&
           filteredCryptos?.map(({ base, target, last, coin_id }) => {
             const id = nanoid();
