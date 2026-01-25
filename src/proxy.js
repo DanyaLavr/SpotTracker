@@ -17,12 +17,18 @@ export async function proxy(request) {
   const uid = await getAuth()
     .verifyIdToken(session)
     .catch(() => null);
+  console.log("uid :>> ", uid);
   if (!uid) {
+    console.log("without uid ");
     if (pathname === "/backpack" || pathname.startsWith("/backpack")) {
+      console.log("without uid &&  backpack");
+
       return NextResponse.redirect(new URL("/login", request.url));
     }
     if (pathname === "/purchase" || pathname.startsWith("/purchase"))
-      return NextResponse.redirect(new URL("/login", request.url));
+      console.log("without uid &&  purchase");
+
+    return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (uid) {
