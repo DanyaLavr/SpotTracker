@@ -14,21 +14,13 @@ export async function proxy(request) {
       return null;
     }
   };
-  const uid = await getAuth()
-    .verifyIdToken(session)
-    .catch(() => null);
-  console.log("uid :>> ", uid);
+  const uid = await getUid();
   if (!uid) {
-    console.log("without uid ");
     if (pathname === "/backpack" || pathname.startsWith("/backpack")) {
-      console.log("without uid &&  backpack");
-
       return NextResponse.redirect(new URL("/login", request.url));
     }
     if (pathname === "/purchase" || pathname.startsWith("/purchase"))
-      console.log("without uid &&  purchase");
-
-    return NextResponse.redirect(new URL("/login", request.url));
+      return NextResponse.redirect(new URL("/login", request.url));
   }
 
   if (uid) {
