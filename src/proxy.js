@@ -14,7 +14,9 @@ export async function proxy(request) {
       return null;
     }
   };
-  const uid = await getUid();
+  const uid = await getAuth()
+    .verifyIdToken(session)
+    .catch(() => null);
   if (!uid) {
     if (pathname === "/backpack" || pathname.startsWith("/backpack")) {
       return NextResponse.redirect(new URL("/login", request.url));
