@@ -26,7 +26,7 @@ export default function Suggestions() {
   if (!suggestions.length) return;
   return (
     <ul
-      className="absolute left-0 w-full overflow-auto max-h-40 bg-stone-900 px-10 py-6 rounded-b-2xl grid gap-3"
+      className="absolute left-0 w-full overflow-auto max-h-80 md:max-h-40 bg-stone-900 px-10 py-6 rounded-b-2xl grid gap-5 md:gap-3"
       onClick={handleSuggestionClick}
     >
       {suggestions.map((elem) => (

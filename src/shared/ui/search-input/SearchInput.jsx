@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams, useRouter, usePathname } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import { useState, useEffect, Suspense, useCallback } from "react";
 import Search from "../Search.svg";
 import Loader from "../loader/Loader";
@@ -49,14 +49,14 @@ export default function SearchInput() {
         }}
       >
         <input
-          className="outline-0 w-full text-stone-50 placeholder:text-stone-50"
+          className="outline-0 w-full text-stone-50 text-3xl md:text-2xl lg:text-lg placeholder:text-stone-50"
           type="text"
           value={value}
           onChange={(e) => setValue(e.target.value)}
           placeholder="Search…"
         />
         <button className="cursor-pointer">
-          <Search className="fill-stone-50 w-8 h-8" />
+          <Search className="fill-stone-50 w-10 h-10 lg:w-8 lg:h-8" />
         </button>
       </form>
     </Suspense>
