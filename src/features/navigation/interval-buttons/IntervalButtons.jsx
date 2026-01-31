@@ -12,9 +12,8 @@ const buttons = [
 ];
 const IntervalButtons = ({ appInterval }) => {
   const searchParams = useSearchParams();
-  // const appInterval = searchParams.get("inteval");
   const router = useRouter();
-  console.log("appInterval :>> ", appInterval);
+  const currentInterval = appInterval ?? 15;
   return (
     <ul
       className="flex gap-4"
@@ -33,8 +32,8 @@ const IntervalButtons = ({ appInterval }) => {
         <li key={idx}>
           <Button
             color="dark"
-            background={interval == appInterval}
-            className={`h-full border-2 rounded-2xl ${interval == appInterval ? "text-stone-900" : "text-stone-50"} lg:py-3 lg:px-9`}
+            background={interval == currentInterval}
+            className={`h-full border-2 rounded-2xl ${interval == currentInterval ? "text-stone-900" : "text-stone-50"} lg:py-3 lg:px-9`}
             data-interval={interval}
           >
             {content}

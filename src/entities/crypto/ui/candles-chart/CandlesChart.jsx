@@ -44,7 +44,9 @@ export default function CandlesChart({ initialData, coinId }) {
   useEffect(() => {
     if (!seriesRef.current) return;
     const fetchData = async () => {
-      const res = await fetch(`/api/chart?coin=${coinId}&interval=${interval}`);
+      const res = await fetch(
+        `/api/chart?coin=${coinId}&interval=${interval ?? 15}`,
+      );
       const newData = await res.json();
 
       const lastCandle = newData[newData.length - 1];
@@ -61,7 +63,9 @@ export default function CandlesChart({ initialData, coinId }) {
     if (!seriesRef.current || !chartRef.current) return;
 
     const loadIntervalData = async () => {
-      const res = await fetch(`/api/chart?coin=${coinId}&interval=${interval}`);
+      const res = await fetch(
+        `/api/chart?coin=${coinId}&interval=${interval ?? 15}`,
+      );
       const newData = await res.json();
 
       seriesRef.current.setData(newData);
