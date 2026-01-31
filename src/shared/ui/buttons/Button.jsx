@@ -6,6 +6,7 @@ export default function Button({
   onClick,
   type = "button",
   children,
+  ...props
 }) {
   const colorStyle =
     color === "dark" ? "-gray-900" : color === "light" ? "-stone-50" : color;
@@ -13,8 +14,8 @@ export default function Button({
     color === "dark"
       ? "bg-stone-50"
       : color === "light"
-      ? "bg-gray-900 "
-      : color;
+        ? "bg-gray-900 "
+        : color;
   return (
     <button
       type={type}
@@ -25,6 +26,7 @@ export default function Button({
       } ${className}`}
       disabled={disabled}
       onClick={onClick}
+      {...props}
     >
       {children}
     </button>
