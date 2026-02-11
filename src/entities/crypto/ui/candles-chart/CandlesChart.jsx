@@ -2,10 +2,9 @@
 
 import { createChart, CandlestickSeries } from "lightweight-charts";
 import { useSearchParams } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function CandlesChart({ initialData, coinId }) {
-  const [data, setData] = useState(initialData);
   const ref = useRef(null);
   const searchParams = useSearchParams();
   const interval = searchParams.get("interval");
@@ -32,7 +31,7 @@ export default function CandlesChart({ initialData, coinId }) {
     window.addEventListener("resize", handleResize);
 
     const series = chart.addSeries(CandlestickSeries);
-    series.setData(data);
+    series.setData(initialData);
     chartRef.current = chart;
     seriesRef.current = series;
     return () => {
@@ -49,10 +48,19 @@ export default function CandlesChart({ initialData, coinId }) {
       );
       const newData = await res.json();
 
-      const lastCandle = newData[newData.length - 1];
-      seriesRef.current.update(lastCandle);
-    };
+      if (!seriesRef.current) return;
 
+      const lastCandle = newData[newData.length - 1];
+
+      const lastTime =
+        typeof lastCandle.time === "object"
+          ? Math.floor(new Date(lastCandle.time).getTime() / 1000)
+          : lastCandle.time;
+
+      try {
+        seriesRef.current.update({ ...lastCandle, time: lastTime });
+      } catch {}
+    };
     fetchData();
     const id = setInterval(fetchData, 6000);
 

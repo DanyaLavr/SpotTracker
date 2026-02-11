@@ -1,7 +1,7 @@
 "use client";
 
 import { Button, ModalBackground, Overlay } from "@/shared/ui";
-import Navigation from "../navigation/Navigation";
+import Navigation from "../navigation";
 import UserInfo from "@/entities/user/ui/user-info";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";

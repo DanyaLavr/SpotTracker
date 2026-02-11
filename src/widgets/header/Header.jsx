@@ -1,6 +1,5 @@
-import Finder from "@/features/navigation/finder/Finder";
-import UserInfo from "@/entities/user/ui/user-info/UserInfo";
-import BurgerMenu from "@/features/navigation/burger-menu";
+import Finder from "@/features/navigation/finder";
+import UserInfo from "@/entities/user/ui/user-info";
 
 export default function Header() {
   return (

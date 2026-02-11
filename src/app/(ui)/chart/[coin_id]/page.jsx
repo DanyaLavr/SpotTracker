@@ -1,8 +1,6 @@
 import { createCandles } from "@/entities/crypto/modules/createCandles";
 import CandlesChart from "@/entities/crypto/ui/candles-chart";
 import IntervalButtons from "@/features/navigation/interval-buttons";
-import { Button } from "@/shared/ui";
-import Section from "@/shared/ui/section/Section";
 async function getCandles(symbol, interval) {
   const res = await fetch(
     `https://api.bybit.com/v5/market/kline?category=spot&symbol=${symbol}&interval=${interval ? interval : 15}&limit=1000`,
