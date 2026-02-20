@@ -33,7 +33,13 @@ export async function GET(req) {
 
     return Response.json(candles);
   } catch (error) {
-    console.error("API /chart error:", error);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    console.error("API /chart error:", error?.message || error, error);
+    return Response.json(
+      {
+        error: "Internal server error",
+        details: error?.message || "Unknown error",
+      },
+      { status: 500 },
+    );
   }
 }
