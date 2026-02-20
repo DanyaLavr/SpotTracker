@@ -71,13 +71,15 @@ export default function CandlesChart({ initialData, coinId }) {
     if (!seriesRef.current || !chartRef.current) return;
 
     const loadIntervalData = async () => {
-      const res = await fetch(
-        `/api/chart?coin=${coinId}&interval=${interval ?? 15}`,
-      );
-      const newData = await res.json();
+      try {
+        const res = await fetch(
+          `/api/chart?coin=${coinId}&interval=${interval ?? 15}`,
+        );
+        const newData = await res.json();
 
-      seriesRef.current.setData(newData);
-      chartRef.current.timeScale().fitContent();
+        seriesRef.current.setData(newData);
+        chartRef.current.timeScale().fitContent();
+      } catch {}
     };
 
     loadIntervalData();
