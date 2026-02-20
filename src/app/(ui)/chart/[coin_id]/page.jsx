@@ -1,5 +1,6 @@
+import dynamic from "next/dynamic";
+
 import { createCandles } from "@/entities/crypto/modules/createCandles";
-import CandlesChart from "@/entities/crypto/ui/candles-chart";
 import IntervalButtons from "@/features/navigation/interval-buttons";
 async function getCandles(symbol, interval) {
   const res = await fetch(
@@ -12,6 +13,10 @@ async function getCandles(symbol, interval) {
   const json = await res.json();
   return json.result.list;
 }
+
+const CandlesChart = dynamic(
+  () => import("@/entities/crypto/ui/candles-chart"),
+);
 export default async function ChartPage({ params, searchParams }) {
   const { coin_id } = await params;
   const { interval } = await searchParams;
