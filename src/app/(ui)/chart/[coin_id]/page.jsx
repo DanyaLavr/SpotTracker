@@ -11,14 +11,14 @@ async function getCandles(symbol, interval) {
         cache: "no-store",
       },
     );
-
+    console.log("res :>> ", res);
     if (!res.ok) {
       console.error("Bybit response not ok:", res.status);
       return [];
     }
 
     const json = await res.json();
-
+    console.log("json :>> ", json);
     if (!json?.result?.list) {
       console.error("Invalid Bybit response:", json);
       return [];
@@ -40,7 +40,7 @@ export default async function ChartPage({ params, searchParams }) {
   const { interval } = await searchParams;
 
   const candles = await getCandles(coin_id, interval ?? 15);
-
+  console.log("candles :>> ", candles);
   const data = createCandles(candles);
   return (
     <div className="flex flex-col gap-5 w-full bg-stone-900 pt-3">
