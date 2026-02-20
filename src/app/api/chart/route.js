@@ -11,6 +11,7 @@ export async function GET(req) {
   try {
     const res = await fetch(
       `https://api.bybit.com/v5/market/kline?category=spot&symbol=${coin}&interval=${interval}&limit=1000`,
+      { cache: "no-store" },
     );
 
     if (!res.ok) {
@@ -20,7 +21,15 @@ export async function GET(req) {
       );
     }
 
-    const data = await res.json();
+    let data;
+    try {
+      data = await res.json();
+    } catch (e) {
+      return Response.json(
+        { error: "Invalid JSON from Bybit", details: e.message },
+        { status: 500 },
+      );
+    }
 
     if (!data?.result?.list) {
       return Response.json(
@@ -30,15 +39,11 @@ export async function GET(req) {
     }
 
     const candles = createCandles(data.result.list);
-
     return Response.json(candles);
   } catch (error) {
     console.error("API /chart error:", error?.message || error, error);
     return Response.json(
-      {
-        error: error?.message || "Internal server error",
-        details: error?.message || "Unknown error",
-      },
+      { error: "Internal server error", details: error?.message || "Unknown" },
       { status: 500 },
     );
   }
