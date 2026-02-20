@@ -47,11 +47,13 @@ export default function CandlesChart({ initialData, coinId }) {
         const res = await fetch(
           `/api/chart?coin=${coinId}&interval=${interval ?? 15}`,
         );
+        console.log("fetchData res :>> ", res);
         if (!res.ok) return;
         const newData = await res.json();
         if (!Array.isArray(newData) || newData.length === 0) return;
-
+        console.log("newData :>> ", newData);
         const lastCandle = newData[newData.length - 1];
+        console.log("lastCandle :>> ", lastCandle);
         if (!lastCandle || lastCandle.time == null) return;
 
         const lastTime =
@@ -80,9 +82,12 @@ export default function CandlesChart({ initialData, coinId }) {
         const res = await fetch(
           `/api/chart?coin=${coinId}&interval=${interval ?? 15}`,
         );
+        console.log("loadIntervalData res:>> ", res);
         if (!res.ok) return;
 
         const newData = await res.json();
+        console.log("loadIntervalData newData:>> ", newData);
+
         if (!Array.isArray(newData) || newData.length === 0) return;
 
         seriesRef.current.setData(newData);
