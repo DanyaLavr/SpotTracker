@@ -2,21 +2,39 @@ import dynamic from "next/dynamic";
 
 import { createCandles } from "@/entities/crypto/modules/createCandles";
 import IntervalButtons from "@/features/navigation/interval-buttons";
+import CandlesChart from "@/entities/crypto/ui/candles-chart";
 async function getCandles(symbol, interval) {
-  const res = await fetch(
-    `https://api.bybit.com/v5/market/kline?category=spot&symbol=${symbol}&interval=${interval ? interval : 15}&limit=1000`,
-    {
-      cache: "no-store",
-    },
-  );
+  try {
+    const res = await fetch(
+      `https://api.bybit.com/v5/market/kline?category=spot&symbol=${symbol}&interval=${interval ? interval : 15}&limit=1000`,
+      {
+        cache: "no-store",
+      },
+    );
 
-  const json = await res.json();
-  return json.result.list;
+    if (!res.ok) {
+      console.error("Bybit response not ok:", res.status);
+      return [];
+    }
+
+    const json = await res.json();
+
+    if (!json?.result?.list) {
+      console.error("Invalid Bybit response:", json);
+      return [];
+    }
+
+    return json.result.list;
+  } catch (error) {
+    console.error("Failed to fetch candles:", error);
+    return [];
+  }
 }
 
-const CandlesChart = dynamic(
-  () => import("@/entities/crypto/ui/candles-chart"),
-);
+// const CandlesChart = dynamic(
+//   () => import("@/entities/crypto/ui/candles-chart"),
+//   { ssr: false },
+// );
 export default async function ChartPage({ params, searchParams }) {
   const { coin_id } = await params;
   const { interval } = await searchParams;
