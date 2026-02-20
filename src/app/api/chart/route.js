@@ -36,7 +36,7 @@ export async function GET(req) {
     console.error("API /chart error:", error?.message || error, error);
     return Response.json(
       {
-        error: "Internal server error",
+        error: error?.message || "Internal server error",
         details: error?.message || "Unknown error",
       },
       { status: 500 },
