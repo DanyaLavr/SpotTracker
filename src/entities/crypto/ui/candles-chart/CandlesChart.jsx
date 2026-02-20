@@ -43,23 +43,28 @@ export default function CandlesChart({ initialData, coinId }) {
   useEffect(() => {
     if (!seriesRef.current) return;
     const fetchData = async () => {
-      const res = await fetch(
-        `/api/chart?coin=${coinId}&interval=${interval ?? 15}`,
-      );
-      const newData = await res.json();
-
-      if (!seriesRef.current) return;
-
-      const lastCandle = newData[newData.length - 1];
-
-      const lastTime =
-        typeof lastCandle.time === "object"
-          ? Math.floor(new Date(lastCandle.time).getTime() / 1000)
-          : lastCandle.time;
-
       try {
-        seriesRef.current.update({ ...lastCandle, time: lastTime });
-      } catch {}
+        const res = await fetch(
+          `/api/chart?coin=${coinId}&interval=${interval ?? 15}`,
+        );
+        if (!res.ok) return;
+        const newData = await res.json();
+        if (!Array.isArray(newData) || newData.length === 0) return;
+
+        const lastCandle = newData[newData.length - 1];
+        if (!lastCandle || lastCandle.time == null) return;
+
+        const lastTime =
+          typeof lastCandle.time === "object"
+            ? Math.floor(new Date(lastCandle.time).getTime() / 1000)
+            : lastCandle.time;
+
+        try {
+          seriesRef.current.update({ ...lastCandle, time: lastTime });
+        } catch {}
+      } catch (e) {
+        console.error("Failed to fetch chart data:", e);
+      }
     };
     fetchData();
     const id = setInterval(fetchData, 6000);
@@ -75,11 +80,16 @@ export default function CandlesChart({ initialData, coinId }) {
         const res = await fetch(
           `/api/chart?coin=${coinId}&interval=${interval ?? 15}`,
         );
+        if (!res.ok) return;
+
         const newData = await res.json();
+        if (!Array.isArray(newData) || newData.length === 0) return;
 
         seriesRef.current.setData(newData);
         chartRef.current.timeScale().fitContent();
-      } catch {}
+      } catch (e) {
+        console.error("Failed to load interval data:", e);
+      }
     };
 
     loadIntervalData();
