@@ -13,7 +13,7 @@ export async function GET(req) {
       `https://api.bybit.com/v5/market/kline?category=spot&symbol=${coin}&interval=${interval}&limit=1000`,
       { cache: "no-store" },
     );
-
+    console.log("api/chart res :>> ", res);
     if (!res.ok) {
       return Response.json(
         { error: "Bybit request failed", status: res.status },
