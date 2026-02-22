@@ -9,7 +9,13 @@ export async function GET(req) {
   }
   const res = await fetch(
     `https://api.bybit.com/v5/market/kline?category=spot&symbol=${coin}&interval=${interval}&limit=1000`,
-    { cache: "no-store" },
+    {
+      cache: "no-store",
+      headers: {
+        "User-Agent": "Mozilla/5.0",
+        Accept: "application/json",
+      },
+    },
   );
   const data = await res.json();
   return Response.json(data);
