@@ -4,21 +4,35 @@ export async function GET(req) {
   const coin = req.nextUrl.searchParams.get("coin");
   const interval = req.nextUrl.searchParams.get("interval") || 15;
 
-  if (!coin) {
-    return Response.json({ error: "Missing coin param" }, { status: 400 });
-  }
-  const res = await fetch(
-    `https://api.bybit.com/v5/market/kline?category=spot&symbol=${coin}&interval=${interval}&limit=1000`,
-    {
-      cache: "no-store",
-      headers: {
-        "User-Agent": "Mozilla/5.0",
-        Accept: "application/json",
+  try {
+    const res = await fetch(
+      `https://api.bybit.com/v5/market/kline?category=spot&symbol=${coin}&interval=${interval}&limit=200`,
+      {
+        cache: "no-store",
+        headers: {
+          "User-Agent": "Mozilla/5.0",
+          Accept: "application/json",
+        },
       },
-    },
-  );
-  const data = await res.json();
-  return Response.json(data);
+    );
+
+    if (!res.ok) return Response.json([], { status: 200 });
+
+    const contentType = res.headers.get("content-type");
+    if (!contentType?.includes("application/json")) {
+      return Response.json([], { status: 200 });
+    }
+
+    const data = await res.json();
+
+    if (data.retCode !== 0 || !data?.result?.list) {
+      return Response.json([], { status: 200 });
+    }
+
+    return Response.json(data.result.list);
+  } catch (e) {
+    return Response.json([], { status: 200 });
+  }
 
   // try {
   //   const res = await fetch(
