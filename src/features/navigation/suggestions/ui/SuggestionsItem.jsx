@@ -11,7 +11,7 @@ export default function SuggestionsItem({ elem }) {
       className={`${
         isShow ? "grid" : "flex"
       } md:flex items-center bg-stone-950 text-stone-50 px-6 py-4 rounded-2xl cursor-pointer`}
-      data-id={`${coin_id}-suggestion`}
+      data-id={`${base}USDT`}
     >
       <div className="flex">
         {isShow && (

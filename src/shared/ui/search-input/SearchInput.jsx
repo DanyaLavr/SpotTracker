@@ -18,7 +18,7 @@ export default function SearchInput() {
       params.set("search", value.trim());
       return params.toString();
     },
-    [searchParams]
+    [searchParams],
   );
 
   useEffect(() => {
@@ -56,7 +56,7 @@ export default function SearchInput() {
           placeholder="Search…"
         />
         <button className="cursor-pointer">
-          <Search className="fill-stone-50 w-10 h-10 lg:w-8 lg:h-8" />
+          {/* <Search className="fill-stone-50 w-10 h-10 lg:w-8 lg:h-8" /> */}
         </button>
       </form>
     </Suspense>

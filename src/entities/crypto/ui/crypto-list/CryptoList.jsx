@@ -3,7 +3,7 @@
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import CryptoItem from "../crypto-item/CryptoItem";
-import Loader from "@/shared/ui/loader/Loader";
+import { Loader } from "@/shared/ui";
 import {
   selectBackpack,
   selectUser,
@@ -31,7 +31,7 @@ export default function CryptoList({ cryptos }) {
     const base = search.toUpperCase();
 
     return currentCryptos.filter(
-      (elem) => elem.base.includes(base) || elem.coin_id.includes(name)
+      (elem) => elem.base.includes(base) || elem.coin_id.includes(name),
     );
   }, [search, currentCryptos]);
 
