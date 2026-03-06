@@ -2,6 +2,7 @@ import { selectCryptoById } from "@/entities/crypto/modules/redux/selectors";
 import { updateBackpackOnSell } from "@/entities/user/modules/redux/operations";
 import { selectUser } from "@/entities/user/modules/redux/selectors";
 import { ISellData } from "@/shared/types";
+import { TStringify } from "@/shared/types/utils";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { FormikHelpers } from "formik";
 import { useParams, useRouter } from "next/navigation";
@@ -16,7 +17,7 @@ export const useSellFormHandlers = () => {
   const coin_id = params.coin_id as string;
   const selectedCrypto = useAppSelector(selectCryptoById(coin_id));
 
-  const handleSubmit = async (values: ISellData) => {
+  const handleSubmit = async (values: TStringify<ISellData>) => {
     if (!uid || !selectedCrypto) return;
     await dispatch(
       updateBackpackOnSell({
@@ -33,15 +34,17 @@ export const useSellFormHandlers = () => {
   };
   const handleChange = (
     e: ChangeEvent<HTMLInputElement>,
-    values: ISellData,
+    values: TStringify<ISellData>,
     setFieldValue: FormikHelpers<ISellData>["setFieldValue"],
   ) => {
     const { name, value } = e.target;
     setFieldValue(name, value);
 
     const updated = {
-      ...values,
-      [name]: +value,
+      price: Number(values.price),
+      count: Number(values.count),
+      sellAmount: Number(values.sellAmount),
+      ...{ [name]: Number(value) },
     };
 
     if (updated.sellAmount && updated.price && name !== "count") {

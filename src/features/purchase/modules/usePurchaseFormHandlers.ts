@@ -16,7 +16,9 @@ export const usePurchaseFormHandlers = () => {
   const coin_id = params.coin_id as string;
   const selectedCrypto = useAppSelector(selectCryptoById(coin_id));
 
-  const handleSubmit = async (values: IPurchaseData) => {
+  const handleSubmit = async (values: {
+    [K in keyof IPurchaseData]: string;
+  }) => {
     if (!uid || !selectedCrypto) return;
     await dispatch(
       updateBackpackOnPurchase({
@@ -34,15 +36,19 @@ export const usePurchaseFormHandlers = () => {
   };
   const handleChange = (
     e: ChangeEvent<HTMLInputElement>,
-    values: IPurchaseData,
+    values: {
+      [K in keyof IPurchaseData]: string;
+    },
     setFieldValue: FormikHelpers<IPurchaseData>["setFieldValue"],
   ) => {
     const { name, value } = e.target;
     setFieldValue(name, value);
 
     const updated = {
-      ...values,
-      [name]: Number(value),
+      price: Number(values.price),
+      count: Number(values.count),
+      invested: Number(values.invested),
+      ...{ [name]: Number(value) }, // актуальное изменённое поле
     };
 
     if (updated.invested && updated.price && name !== "count") {

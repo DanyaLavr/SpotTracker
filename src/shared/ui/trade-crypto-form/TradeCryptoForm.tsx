@@ -7,9 +7,8 @@ import {
 } from "@/entities/user/modules/redux/selectors";
 import { useParams, usePathname } from "next/navigation";
 import { ChangeEvent, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Loader from "../loader";
-import { Form, Formik, FormikValues } from "formik";
+import { Form, Formik, FormikHelpers, FormikValues } from "formik";
 import FormItem from "../form-item";
 import { Button } from "../buttons";
 import ExtraButtons from "./ExtraButtons";
@@ -17,13 +16,14 @@ import { ITradeConfig } from "@/shared/types";
 import { AnyObject } from "yup";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { getBackpack } from "@/entities/user/modules/redux/operations";
+import { TStringify } from "@/shared/types/utils";
 interface IHandlers<T extends FormikValues> {
   handleChange: (
     e: ChangeEvent<HTMLInputElement>,
-    values: T,
-    setFieldValue: any,
+    values: TStringify<T>,
+    setFieldValue: FormikHelpers<T>["setFieldValue"],
   ) => void;
-  handleSubmit: (values: T) => void;
+  handleSubmit: (values: TStringify<T>) => void;
 }
 interface IProps<T extends AnyObject> {
   config: ITradeConfig<T>;
@@ -69,7 +69,7 @@ const TradeCryptoForm = <T extends AnyObject>({
   const { inputs, initialValues, validationSchema } = config;
   const { handleChange, handleSubmit } = handlers;
   return (
-    <Formik<T>
+    <Formik<TStringify<T>>
       initialValues={initialValues(crypto)}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}

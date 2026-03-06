@@ -1,7 +1,7 @@
 import { ICryptoBackpack, ICryptoTicker } from "@/shared/types";
+import { TStringify } from "@/shared/types/utils";
 import { FormikProps, FormikValues } from "formik";
 import { ChangeEvent } from "react";
-import { string } from "yup";
 
 interface IProps<T extends FormikValues, K extends keyof ICryptoBackpack> {
   buttons: number[];
@@ -12,12 +12,12 @@ interface IProps<T extends FormikValues, K extends keyof ICryptoBackpack> {
   handlers: {
     handleChange: (
       e: ChangeEvent<HTMLInputElement>,
-      values: T,
+      values: TStringify<T>,
       setFieldValue: any,
     ) => void;
   };
   setFieldValue: FormikProps<T>["setFieldValue"];
-  values: T;
+  values: TStringify<T>;
 }
 const ExtraButtons = <T extends FormikValues, K extends keyof ICryptoBackpack>({
   buttons,
