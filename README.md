@@ -1,6 +1,6 @@
 # 🪙 SpotTracker
 
-### 📈 Комерційний криптовалютний трекер з інтерактивним портфелем та даними в реальному часі
+### 📈 Commercial cryptocurrency tracker with an interactive portfolio and real-time data
 
 [![Live Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://crypto-back-phi.vercel.app/)
 [![GitHub](https://img.shields.io/github/stars/DanyaLavr/SpotTracker?style=social)](https://github.com/DanyaLavr/SpotTracker)
@@ -12,225 +12,239 @@
 
 ---
 
-# 💖 Підтримати проект
+# 💖 Support the Project
 
-Якщо вам подобається **SpotTracker**, ви можете підтримати розвиток проекту.
+If you like **SpotTracker**, you can support the development of the project.
 
 **USDT (TRC-20)**
 
 `TN2mmwi8bcatCKmttUc3m1WL8DBrGDothj`
 
-⭐ Будь-яка підтримка допомагає покращувати проект.
+⭐ Any support helps improve the project.
 
 ---
 
-# 📋 Зміст
+# 📋 Table of Contents
 
-- [📌 Про проект](#-про-проект)
-- [💼 Бізнес-цінність](#-бізнес-цінність)
-- [🛠 Технологічний стек](#-технологічний-стек)
-- [⚙️ Ключові інженерні рішення](#-ключові-інженерні-рішення)
-- [🏗 Архітектура](#-архітектура)
-- [📊 Продуктивність](#-продуктивність)
-- [🛡 Безпека](#-безпека)
+- [📌 About the Project](#-about-the-project)
+- [💼 Business Value](#-business-value)
+- [🛠 Technology Stack](#-technology-stack)
+- [⚙️ Key Engineering Decisions](#-key-engineering-decisions)
+- [🏗 Architecture](#-architecture)
+- [📊 Performance](#-performance)
+- [🛡 Security](#-security)
 - [🎨 UI/UX](#-uiux)
-- [📬 Контакти](#-контакти)
+- [📬 Contacts](#-contacts)
 
 ---
 
-# 📌 Про проект
+# 📌 About the Project
 
-**SpotTracker** — це веб-додаток для управління криптовалютним портфелем у реальному часі.
+**SpotTracker** is a web application for managing a cryptocurrency portfolio in real time.
 
-Користувач може:
+Users can:
 
-- 📊 Відстежувати актуальну вартість **600+ криптовалют**
-- 💰 Додавати активи до власного портфеля та бачити їх загальну вартість
-- ⚡ Отримувати миттєві оновлення цін без перезавантаження сторінки
-- 📈 Переглядати динаміку ринку на окремих сторінках валют
+- 📊 Track the current value of **600+ cryptocurrencies**
+- 💰 Add assets to their portfolio and see the total value
+- ⚡ Receive instant price updates without page reloads
+- 📈 View market dynamics on individual currency pages
 
-> Проект реалізований індивідуально з дотриманням усіх практик комерційної розробки:  
-> git flow, модульне тестування (планується), CI/CD.
-
----
-
-# 💼 Бізнес-цінність
-
-- ⚡ **Швидкість**  
-  оптимізований бандл та ліниве завантаження забезпечують миттєвий старт навіть на мобільних пристроях з повільним інтернетом.
-
-- 🔒 **Безпека**  
-  жоден API-ключ не потрапляє у клієнтський код; захищені маршрути перевіряються ще до завантаження сторінки.
-
-- 📱 **Доступність**  
-  адаптивний дизайн та підтримка accessibility роблять додаток зручним для всіх користувачів.
-
-- 🔄 **Актуальність**  
-  завдяки ISR та серверному кешуванню дані оновлюються без втрати продуктивності.
+> The project was developed individually following commercial development best practices:  
+> git flow, modular testing (planned), CI/CD.
 
 ---
 
-# 🛠 Технологічний стек
+# 💼 Business Value
 
-| Категорія | Технології |
+- ⚡ **Speed**  
+  Optimized bundles and lazy loading provide fast startup even on mobile devices with slow internet.
+
+- 🔒 **Security**  
+  No API keys are exposed to the client; protected routes are verified before the page loads.
+
+- 📱 **Accessibility**  
+  Responsive design and accessibility support make the application convenient for all users.
+
+- 🔄 **Fresh Data**  
+  Thanks to ISR and server caching, data updates without performance loss.
+
+---
+
+# 🛠 Technology Stack
+
+| Category | Technologies |
 |-----------|------------|
-| **Фреймворк** | Next.js (App Router), React 18 |
-| **Мова** | TypeScript |
-| **Стейт-менеджмент** | Redux Toolkit |
-| **Стилізація** | Tailwind CSS |
+| **Framework** | Next.js (App Router), React 18 |
+| **Language** | TypeScript |
+| **State Management** | Redux Toolkit |
+| **Styling** | Tailwind CSS |
 | **API** | CoinGecko API |
-| **Інструменти** | Vercel, Git, Webpack, Postman |
-| **Методології** | Feature-Sliced Design (FSD), SOLID, DRY |
+| **Tools** | Vercel, Git, Webpack, Postman |
+| **Methodologies** | Feature-Sliced Design (FSD), SOLID, DRY |
 
 ---
 
-# ⚙️ Ключові інженерні рішення
+# ⚙️ Key Engineering Decisions
 
-### 1️⃣ Оптимізація продуктивності
+### 1️⃣ Performance Optimization
 
-**Проблема:**  
-Важкі компоненти портфеля сповільнювали початкове завантаження.
+**Problem:**  
+Heavy portfolio components slowed down the initial load.
 
-**Рішення:**
+**Solution:**
 
-- Додаткова інформація про користувача завантажується за необхідністю
-- Використано `React.lazy` та `Suspense` для код-спліттингу графіків
-- Проведено аналіз бандла за допомогою `@next/bundle-analyzer`
-- Сторонні бібліотеки винесено в окремі чанки
+- Additional user data loads only when needed
+- `React.lazy` and `Suspense` used for chart code splitting
+- Bundle analysis with `@next/bundle-analyzer`
+- Third-party libraries moved to separate chunks
 
-**Результат:**  
-TTI (Time To Interactive) скорочено на **60%**
-
----
-
-### 2️⃣ Робота з API та лімітами
-
-**Проблема:**  
-CoinGecko API має обмеження на кількість запитів.
-
-**Рішення:**
-
-- 🧠 **Серверне кешування** — `fetch` з `revalidate: 60`
-- ⏱ **Клієнтський дебаунс** — запит після **500 мс**
-- 🔄 **RTK** — кешування, фонова синхронізація та оптимістичні оновлення
+**Result:**  
+TTI (Time To Interactive) reduced by **60%**
 
 ---
 
-### 3️⃣ Генерація сторінок (ISR)
+### 2️⃣ Working with API Limits
 
-**Проблема:**  
-Потрібно поєднати швидкість статичних сторінок та актуальність цін.
+**Problem:**  
+CoinGecko API has request limits.
 
-**Рішення:**
+**Solution:**
 
-- використано **Incremental Static Regeneration (ISR)**
-- сторінки криптовалют генеруються статично
-- ціни оновлюються **кожні 60 секунд**
-
----
-
-### 4️⃣ Міграція на TypeScript
-
-**Проблема:**  
-Початковий код на JavaScript не забезпечував типобезпеки.
-
-**Рішення:**
-
-- поступовий рефакторинг
-- строгі типи для CoinGecko API
-- типізація Redux-стану
-
-**Результат:**  
-зменшено runtime-помилки та покращено DX.
+- 🧠 **Server caching** — `fetch` with `revalidate: 60`
+- ⏱ **Client debounce** — request after **500 ms**
+- 🔄 **RTK** — caching, background synchronization, optimistic updates
 
 ---
 
-### 5️⃣ Безпека
+### 3️⃣ Page Generation (ISR)
 
-**Проблема:**  
-API-ключі не повинні потрапляти у клієнтський код.
+**Problem:**  
+Need to combine the speed of static pages with up-to-date price data.
 
-**Рішення:**
+**Solution:**
 
-- ключі у **.env.local** та **Vercel Secrets**
-- перевірка авторизації через **Next.js Middleware**
+- **Incremental Static Regeneration (ISR)**
+- Cryptocurrency pages generated statically
+- Prices updated **every 60 seconds**
+
+---
+
+### 4️⃣ Migration to TypeScript
+
+**Problem:**  
+Initial JavaScript code did not provide type safety.
+
+**Solution:**
+
+- Gradual refactoring
+- Strict types for CoinGecko API
+- Redux state typing
+
+**Result:**  
+Reduced runtime errors and improved developer experience.
+
+---
+
+### 5️⃣ Security
+
+**Problem:**  
+API keys must not appear in client-side code.
+
+**Solution:**
+
+- Keys stored in **.env.local** and **Vercel Secrets**
+- Authorization checks via **Next.js Middleware**
 
 ---
 
 ### 6️⃣ UI/UX
 
-- 📱 **Mobile-first підхід**
-- ⏳ **Skeleton screens** під час завантаження
-- ♿ **Accessibility** (ARIA, фокус, контраст)
+- 📱 **Mobile-first approach**
+- ⏳ **Skeleton screens** during loading
+- ♿ **Accessibility** (ARIA, focus, contrast)
 
 ---
 
-# 🏗 Архітектура
+# 🏗 Architecture
 
-Проект побудовано за методологією **Feature-Sliced Design (FSD)**.
+The project is built using **Feature-Sliced Design (FSD)**.
 
-src/
-├── app/       # Глобальні налаштування: store, providers, layout
-├── pages/     # Сторінки додатку
-├── widgets/   # Самодостатні блоки
-├── features/  # Функціональні модулі
-├── entities/  # Бізнес-сутності
-└── shared/    # UI kit, hooks, utils
+```bash
+src
+│
+├─ app
+│  └─ store, providers, layout
+│
+├─ pages
+│  └─ application pages
+│
+├─ widgets
+│  └─ large UI blocks
+│
+├─ features
+│  └─ functional modules
+│
+├─ entities
+│  └─ business entities
+│
+└─ shared
+   └─ ui, hooks, utils
+```
 
-### Ключові принципи
+### Key Principles
 
-- 🔹 Чітке розділення відповідальності  
-- 🔹 Ізольованість фіч  
-- 🔹 Перевикористання shared-компонентів
+-  Clear separation of responsibilities  
+-  Feature isolation  
+-  Reusable shared components
 
 ---
 
-# 📊 Продуктивність
+# 📊 Performance
 
-| Метрика | До оптимізації | Після оптимізації | Покращення |
-|--------|----------------|------------------|------------|
-| ⏱ **TTI (Time To Interactive)** | 3.2 с | 1.3 с | ⚡ **60%** |
-| 🖼 **First Contentful Paint** | 1.8 с | 0.9 с | ⚡ **50%** |
-| 📦 **Розмір основного бандла** | 245 kB | 147 kB | ⚡ **40%** |
+| Metric | Before Optimization | After Optimization | Improvement |
+|--------|--------------------|-------------------|------------|
+| ⏱ **TTI (Time To Interactive)** | 3.2 s | 1.3 s | ⚡ **60%** |
+| 🖼 **First Contentful Paint** | 1.8 s | 0.9 s | ⚡ **50%** |
+| 📦 **Main bundle size** | 245 kB | 147 kB | ⚡ **40%** |
 | 📈 **Lighthouse Performance** | 72 | 98 | ⚡ **+26** |
 
-> *Дані виміряно на емульованому мобільному пристрої (Moto G4, 3G).*
+> *Measured on an emulated mobile device (Moto G4, 3G).*
 
 ---
 
-# 🛡 Безпека
+# 🛡 Security
 
-- 🔐 **Middleware-захист** — перевірка закритих маршрутів на сервері
-- 🗝 **Змінні оточення** — API-ключі не потрапляють у клієнтський код
-- 🍪 **Безпечні сесії** — httpOnly cookies
-- ⚔️ **Захист від XSS** — автоматичне екранування React
+- 🔐 **Middleware protection** — protected routes checked on the server
+- 🗝 **Environment variables** — API keys never exposed to client code
+- 🍪 **Secure sessions** — httpOnly cookies
+- ⚔️ **XSS protection** — automatic React escaping
 
 ---
 
 # 🎨 UI/UX
 
-### Дизайн-система
+### Design System
 
-- 🎨 Tailwind CSS з кастомною конфігурацією
-- 📱 адаптивна верстка
+- 🎨 Tailwind CSS with custom configuration
+- 📱 Responsive layout
 
-### UX-фічі
+### UX Features
 
 - ⏳ Skeleton screens
-- 🔍 дебаунс пошуку
-- 🔗 збереження фільтрів у URL
-- 🎬 анімовані переходи (Framer Motion)
+- 🔍 Search debounce
+- 🔗 Filter state saved in URL
+- 🎬 Page transitions (Framer Motion)
 
 ---
 
-# 📬 Контакти
+# 📬 Contacts
 
-**Лавровський Данило — Frontend Developer**
+**Danylo Lavrovskyi — Frontend Developer**
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/danylo-lavrovskyi-23751a27a/)
 [![Telegram](https://img.shields.io/badge/Telegram-2CA5E0?style=for-the-badge&logo=telegram&logoColor=white)](http://t.me/DanyaLavr)
 [![Email](https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white)](mailto:lavrovskyi.danya@gmail.com)
 
-**Ліцензія:** MIT
+**License:** MIT
 
-⭐ Якщо вам сподобався проект, поставте зірочку на GitHub — це дуже мотивує!
+⭐ If you like the project, please give it a star on GitHub — it really motivates development!
