@@ -1,7 +1,10 @@
 import { ISellData, ITradeConfig } from "@/shared/types";
 import { sellInitialValues, sellSchema } from "../lib/formik/constants";
 
-export const sellFormConfig: ITradeConfig<ISellData> = {
+export const sellFormConfig: ITradeConfig<
+  { [K in keyof ISellData]: string },
+  ISellData
+> = {
   initialValues: sellInitialValues,
   validationSchema: sellSchema,
   inputs: [

@@ -20,10 +20,13 @@ export interface IAuthConfig<T extends AnyObject> extends IFormikConfig<T> {
   };
   button: string;
 }
-export interface ITradeConfig<T extends AnyObject> {
+export interface ITradeConfig<
+  Values extends AnyObject,
+  Schema extends AnyObject,
+> {
   inputs: IInputWithButtons[];
-  initialValues: (crypto: ICryptoTicker) => T;
-  validationSchema: ObjectSchema<T>;
+  initialValues: (crypto: ICryptoTicker) => Values;
+  validationSchema: ObjectSchema<Schema>;
 }
 export interface ITradeData {
   price: number;

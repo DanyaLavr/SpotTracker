@@ -1,3 +1,4 @@
+import { ICryptoTicker } from "@/shared/types";
 import * as Yup from "yup";
 
 export const purchaseSchema = Yup.object().shape({
@@ -6,10 +7,10 @@ export const purchaseSchema = Yup.object().shape({
   invested: Yup.number().min(0, "Cannot be negative").required("Required"),
 });
 
-export const purchaseInitialValues = ({ last = 0 } = {}) => {
+export const purchaseInitialValues = (crypto: ICryptoTicker) => {
   return {
-    price: last,
-    count: 0,
-    invested: 0,
+    price: crypto?.last?.toString() ?? "",
+    count: "",
+    invested: "",
   };
 };
