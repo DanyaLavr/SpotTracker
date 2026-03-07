@@ -1,6 +1,5 @@
 "use client";
 import { Form, Formik } from "formik";
-import { useSelector } from "react-redux";
 
 import {
   selectUserError,
@@ -10,6 +9,7 @@ import {
 import Link from "next/link";
 import { FormItem, Button } from "@/shared/ui";
 import { IAuthConfig } from "@/shared/types";
+import { useAppSelector } from "@/store/hooks";
 interface IProps<T extends Record<string, any>> {
   config: IAuthConfig<T>;
   onSubmit: (values: T) => Promise<void>;
@@ -18,8 +18,8 @@ export default function AuthForm<T extends Record<string, any>>({
   config,
   onSubmit,
 }: IProps<T>) {
-  const loading = useSelector(selectUserIsLoading);
-  const error = useSelector(selectUserError);
+  const loading = useAppSelector(selectUserIsLoading);
+  const error = useAppSelector(selectUserError);
 
   const { initialValues, validationSchema, inputs, link, button } = config;
   return (
