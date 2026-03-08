@@ -10,7 +10,7 @@ const registerFormConfig: IAuthConfig<IRegisterUser> = {
   inputs: [
     {
       name: "login",
-      placeholder: "name",
+      placeholder: "Name",
     },
     {
       name: "email",
@@ -20,7 +20,7 @@ const registerFormConfig: IAuthConfig<IRegisterUser> = {
     },
     {
       name: "copyPassword",
-      placeholder: "repeat password",
+      placeholder: "Repeat password",
       type: "password",
     },
   ],

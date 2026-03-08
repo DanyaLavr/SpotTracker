@@ -75,7 +75,7 @@ const TradeCryptoForm = <T extends AnyObject>({
       onSubmit={handleSubmit}
     >
       {({ values, setFieldValue }) => (
-        <Form className="grid gap-6">
+        <Form className="grid gap-8">
           {inputs.map(({ name, placeholder, buttons }, idx) => (
             <div className="" key={name}>
               <FormItem

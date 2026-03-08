@@ -28,7 +28,7 @@ export default function AuthForm<T extends Record<string, any>>({
       validationSchema={validationSchema}
       onSubmit={onSubmit}
     >
-      <Form className="grid gap-6">
+      <Form className="grid gap-8">
         {inputs.map(({ name, placeholder, type }, idx) => (
           <FormItem
             key={idx}
