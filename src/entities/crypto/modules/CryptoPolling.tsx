@@ -1,5 +1,5 @@
-// entities/crypto/ui/CryptoPolling.tsx
 "use client";
+
 import { useEffect } from "react";
 import { addAllCryptos } from "../modules/redux/cryptosSlice";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
