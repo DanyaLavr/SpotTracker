@@ -2,11 +2,11 @@
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/entities/user/libs/firebase/auth";
-import { useDispatch } from "react-redux";
 import { loginUser } from "../../modules/redux/operations";
+import { useAppDispatch } from "@/store/hooks";
 
 export default function AutoLogin() {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {

@@ -1,17 +1,17 @@
 "use client";
 
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
 
 import { useSuggestions, useSuggestionsHandlers } from "../modules";
 import { useQuery } from "@/shared/lib/hooks";
 import { selectCryptos } from "@/entities/crypto/modules/redux/selectors";
 
 import SuggestionsItem from "./SuggestionsItem";
+import { useAppSelector } from "@/store/hooks";
 
 export default function Suggestions() {
   const searchQuery = useQuery();
-  const cryptos = useSelector(selectCryptos);
+  const cryptos = useAppSelector(selectCryptos);
   const { handleSuggestionClick, handleBgClick } = useSuggestionsHandlers();
 
   const suggestions = useSuggestions(searchQuery, cryptos);

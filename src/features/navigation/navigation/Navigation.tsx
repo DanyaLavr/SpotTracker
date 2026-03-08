@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useSelector } from "react-redux";
 
 import { selectUser } from "@/entities/user/modules/redux/selectors";
 import { usePathname } from "next/navigation";
+import { useAppSelector } from "@/store/hooks";
 
 export default function Navigation() {
-  const user = useSelector(selectUser);
+  const user = useAppSelector(selectUser);
   const pathname = usePathname();
   const isActiveClass = (href: string) =>
     pathname === href ? "p-3 pl-0 underline" : "p-3 pl-0";

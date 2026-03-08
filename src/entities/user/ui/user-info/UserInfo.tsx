@@ -3,14 +3,13 @@
 import { logoutUser } from "@/entities/user/modules/redux/operations";
 import { selectUser } from "@/entities/user/modules/redux/selectors";
 import Button from "@/shared/ui/buttons/Button";
-import { useAppDispatch } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
 interface IProps {
   className: string;
 }
 export default function UserInfo({ className }: IProps) {
-  const user = useSelector(selectUser);
+  const user = useAppSelector(selectUser);
   const dispatch = useAppDispatch();
   const router = useRouter();
   if (!user) return null;
