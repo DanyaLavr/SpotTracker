@@ -14,17 +14,16 @@ import { addAllCryptos } from "@/entities/crypto/modules/redux/cryptosSlice";
 import { nanoid } from "@reduxjs/toolkit";
 import { ICryptoBackpack, ICryptoTicker } from "@/shared/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { selectCryptos } from "../../modules/redux/selectors";
 
-interface IProps {
-  cryptos: ICryptoTicker[];
-}
-export default function CryptoList({ cryptos }: IProps) {
+export default function CryptoList() {
   const data = usePathname();
   const backpackCrypto = useAppSelector(selectBackpack);
   const user = useAppSelector(selectUser);
   const searchParams = useSearchParams();
   const search = searchParams.get("search");
   const dispatch = useAppDispatch();
+  const cryptos = useAppSelector(selectCryptos);
   const currentCryptos =
     data === "/" ? cryptos : data === "/backpack" ? (backpackCrypto ?? []) : [];
 
