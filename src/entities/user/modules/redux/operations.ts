@@ -22,6 +22,8 @@ import {
   IUser,
 } from "@/shared/types";
 import { RootState } from "@/store/store";
+import { handleFirebaseError } from "@/features/auth/handleFirebaseError";
+import { verifyCode } from "../verifyCode";
 
 interface IError {
   message: string;
@@ -32,11 +34,9 @@ export const registerUser = createAsyncThunk<
   { rejectValue: IError }
 >(
   "user/registerUser",
-  async ({ login, email, password, copyPassword }, { rejectWithValue }) => {
-    if (password !== copyPassword) {
-      return rejectWithValue({ message: "passwords don't match" });
-    }
+  async ({ login, email, password, code }, { rejectWithValue }) => {
     try {
+      await verifyCode(email, code);
       const user = await createUserWithEmailAndPassword(auth, email, password);
       await updateProfile(user.user, { displayName: login });
       const token = await getIdToken(user.user);
@@ -44,7 +44,7 @@ export const registerUser = createAsyncThunk<
 
       return { uid: user.user.uid, email, login, backpack: [] };
     } catch (e: any) {
-      return rejectWithValue({ message: e.message });
+      return rejectWithValue({ message: handleFirebaseError(e.message) });
     }
   },
 );
@@ -65,11 +65,10 @@ export const loginUser = createAsyncThunk<
       login: user.user.displayName ?? "",
     };
   } catch (e: any) {
-    // return rejectWithValue(e.message);
-    return rejectWithValue({ message: e.message || "Unknown error" });
+    return rejectWithValue({ message: handleFirebaseError(e.message) });
   }
 });
-export const logoutUser = createAsyncThunk(
+export const logoutUser = createAsyncThunk<void, void, { rejectValue: IError }>(
   "user/logoutUser",
   async (_, { rejectWithValue }) => {
     try {
@@ -77,38 +76,42 @@ export const logoutUser = createAsyncThunk(
       await axios.delete("/api/auth/logout");
       return;
     } catch (e: any) {
-      return rejectWithValue(e.message);
+      return rejectWithValue({ message: handleFirebaseError(e.message) });
     }
   },
 );
-export const getBackpack = createAsyncThunk(
-  "user/getBackpack",
-  async (id: string, { rejectWithValue }) => {
-    try {
-      const res = await fetchUserBackpack(id);
-      return res;
-    } catch (e) {
-      // return rejectWithValue(e.message);
-      return rejectWithValue(e);
-    }
-  },
-);
-export const createBackpack = createAsyncThunk(
-  "user/createBackpack",
-  async (id: string, { rejectWithValue }) => {
-    try {
-      await setDoc(doc(db, "backpack", id), { data: [] });
-    } catch (e) {
-      // return rejectWithValue(e.message);
-      return rejectWithValue(e);
-    }
-  },
-);
+export const getBackpack = createAsyncThunk<
+  ICryptoBackpack[],
+  string,
+  { rejectValue: IError }
+>("user/getBackpack", async (id: string, { rejectWithValue }) => {
+  try {
+    const res = await fetchUserBackpack(id);
+    return res;
+  } catch (e: any) {
+    return rejectWithValue({ message: e.message });
+  }
+});
+export const createBackpack = createAsyncThunk<
+  void,
+  string,
+  { rejectValue: IError }
+>("user/createBackpack", async (id: string, { rejectWithValue }) => {
+  try {
+    await setDoc(doc(db, "backpack", id), { data: [] });
+  } catch (e: any) {
+    return rejectWithValue({ message: e.message });
+  }
+});
 interface IUpdateCryptoInBackpack {
   id: string;
   data: ICryptoBackpack;
 }
-export const addCryptoInBackpack = createAsyncThunk(
+export const addCryptoInBackpack = createAsyncThunk<
+  ICryptoBackpack,
+  IUpdateCryptoInBackpack,
+  { rejectValue: IError }
+>(
   "user/addCryptoInBackpack",
   async ({ id, data }: IUpdateCryptoInBackpack, { rejectWithValue }) => {
     try {
@@ -116,9 +119,8 @@ export const addCryptoInBackpack = createAsyncThunk(
         data: arrayUnion(data),
       });
       return data;
-    } catch (e) {
-      // return rejectWithValue(e.message);
-      return rejectWithValue(e);
+    } catch (e: any) {
+      return rejectWithValue({ message: e.message });
     }
   },
 );
@@ -152,7 +154,6 @@ export const updateBackpackOnPurchase = createAsyncThunk<
       });
       return { isNew: indexOfCrypto === -1 ? true : false, data };
     } catch (e: any) {
-      // return rejectWithValue(e.message);
       return rejectWithValue({ message: e.message });
     }
   },

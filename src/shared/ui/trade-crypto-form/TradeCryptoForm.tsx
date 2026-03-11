@@ -98,12 +98,17 @@ const TradeCryptoForm = <T extends AnyObject>({
               )}
             </div>
           ))}
+          {error && (
+            <div className="text-rose-700 text-sm font-medium bg-red-50 border-2 border-rose-700 rounded-xl px-4 py-3">
+              {error}
+            </div>
+          )}
+
           <div className="flex justify-self-end">
             <Button type="submit" color="light">
               Submit
             </Button>
           </div>
-          {error && <div className="text-center">{error}</div>}
         </Form>
       )}
     </Formik>

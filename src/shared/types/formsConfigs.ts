@@ -1,9 +1,10 @@
 import { AnyObject, ObjectSchema } from "yup";
 import { ICryptoTicker } from "./crypto";
-interface IBaseInput {
+import { HTMLInputTypeAttribute } from "react";
+export interface IBaseInput {
   name: string;
   placeholder?: string;
-  type?: string;
+  type?: HTMLInputTypeAttribute;
 }
 interface IInputWithButtons extends IBaseInput {
   buttons?: number[];

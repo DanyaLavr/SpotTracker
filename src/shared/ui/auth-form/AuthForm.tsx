@@ -9,7 +9,9 @@ import {
 import Link from "next/link";
 import { FormItem, Button } from "@/shared/ui";
 import { IAuthConfig } from "@/shared/types";
-import { useAppSelector } from "@/store/hooks";
+import { useAppDispatch, useAppSelector } from "@/store/hooks";
+import { useEffect } from "react";
+import { setAuthError } from "@/entities/user/modules/redux/userSlice";
 interface IProps<T extends Record<string, any>> {
   config: IAuthConfig<T>;
   onSubmit: (values: T) => Promise<void>;
@@ -20,7 +22,10 @@ export default function AuthForm<T extends Record<string, any>>({
 }: IProps<T>) {
   const loading = useAppSelector(selectUserIsLoading);
   const error = useAppSelector(selectUserError);
-
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(setAuthError(null));
+  }, []);
   const { initialValues, validationSchema, inputs, link, button } = config;
   return (
     <Formik<T>
@@ -37,6 +42,12 @@ export default function AuthForm<T extends Record<string, any>>({
             type={type}
           />
         ))}
+        {error && (
+          <div className="text-rose-700 text-sm font-medium bg-red-50 border-2 border-rose-700 rounded-xl px-4 py-3">
+            {error}
+          </div>
+        )}
+
         <div className="flex gap-8 items-center justify-self-end ">
           <Link className="underline" href={link.path} replace>
             {link.name}
@@ -45,7 +56,6 @@ export default function AuthForm<T extends Record<string, any>>({
             {button}
           </Button>
         </div>
-        {error && <div>{error}</div>}
       </Form>
     </Formik>
   );

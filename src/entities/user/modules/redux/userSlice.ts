@@ -3,6 +3,7 @@ import {
   isFulfilled,
   isPending,
   isRejected,
+  PayloadAction,
 } from "@reduxjs/toolkit";
 import { USER_STATE } from "./constants";
 import {
@@ -23,7 +24,9 @@ const userSlice = createSlice({
     autoLogin: (state, action) => {
       state.user = action.payload;
     },
-    logout: () => USER_STATE,
+    setAuthError: (state, action: PayloadAction<string | null>) => {
+      state.errorUser = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -92,7 +95,7 @@ const userSlice = createSlice({
         isRejected(getBackpack, updateBackpackOnPurchase, updateBackpackOnSell),
         (state, action) => {
           state.isLoadingBackpack = false;
-          state.errorBackpack = action.payload as string;
+          state.errorBackpack = action.payload?.message as string;
         },
       )
       .addMatcher(isPending(registerUser, loginUser), (state) => {
@@ -100,6 +103,7 @@ const userSlice = createSlice({
         state.errorUser = null;
       })
       .addMatcher(isFulfilled(registerUser, loginUser), (state, action) => {
+        state.isLoadingUser = false;
         state.user = action.payload;
       })
       .addMatcher(isRejected(registerUser, loginUser), (state, action) => {
@@ -108,5 +112,5 @@ const userSlice = createSlice({
       });
   },
 });
-export const { autoLogin } = userSlice.actions;
+export const { autoLogin, setAuthError } = userSlice.actions;
 export const userReducer = userSlice.reducer;
