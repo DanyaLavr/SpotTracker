@@ -20,7 +20,7 @@ export default function OgImage() {
       }}
     >
       <img
-        src="https://crypto-back-git-feat-favicon-kilim4iks-projects.vercel.app/favicon.ico"
+        src="https://crypto-back-git-feat-favicon-kilim4iks-projects.vercel.app/wallet.svg"
         width={120}
         height={120}
       />
