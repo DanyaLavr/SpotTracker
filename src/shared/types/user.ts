@@ -12,5 +12,5 @@ export interface ILoginUser {
 }
 export interface IRegisterUser extends ILoginUser {
   login: string;
-  copyPassword: string;
+  code: string;
 }

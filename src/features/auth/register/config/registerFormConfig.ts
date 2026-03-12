@@ -18,11 +18,7 @@ const registerFormConfig: IAuthConfig<IRegisterUser> = {
     {
       name: "password",
     },
-    {
-      name: "copyPassword",
-      placeholder: "Repeat password",
-      type: "password",
-    },
+    { name: "code", placeholder: "Enter 6-digit code" },
   ],
   button: "Register",
   link: {
