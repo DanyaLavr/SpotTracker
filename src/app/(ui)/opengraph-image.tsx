@@ -1,4 +1,3 @@
-// app/opengraph-image.tsx
 import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
@@ -19,7 +18,11 @@ export default function OgImage() {
         gap: 24,
       }}
     >
-      <div style={{ fontSize: 120 }}>💰</div>
+      <img
+        src="https://crypto-back-phi.vercel.app/wallet.svg"
+        width={120}
+        height={120}
+      />
       <div style={{ color: "#fff", fontSize: 64, fontWeight: 700 }}>
         SpotTracker
       </div>
