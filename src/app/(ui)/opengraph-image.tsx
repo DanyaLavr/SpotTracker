@@ -3,6 +3,7 @@ import { ImageResponse } from "next/og";
 export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
 
 export default function OgImage() {
   return new ImageResponse(
@@ -18,11 +19,7 @@ export default function OgImage() {
         gap: 24,
       }}
     >
-      <img
-        src="https://crypto-back-phi.vercel.app/wallet.svg"
-        width={120}
-        height={120}
-      />
+      <img src={`${siteUrl}/wallet.svg`} width={120} height={120} />
       <div style={{ color: "#fff", fontSize: 64, fontWeight: 700 }}>
         SpotTracker
       </div>

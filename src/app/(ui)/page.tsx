@@ -4,6 +4,8 @@ import { Section, Loader } from "@/shared/ui";
 import CryptoList from "@/entities/crypto/ui/crypto-list";
 import { Metadata } from "next";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL;
+
 export const metadata: Metadata = {
   title: "SpotTracker — Crypto Portfolio Tracker",
   description:
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
     description:
       "A centralized platform to track and manage your cryptocurrency portfolio.",
     type: "website",
-    url: "https://crypto-back-phi.vercel.app",
+    url: siteUrl,
   },
 };
 export default async function Home() {
