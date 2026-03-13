@@ -19,11 +19,7 @@ export default function OgImage() {
         gap: 24,
       }}
     >
-      <img
-        src="https://crypto-back-git-feat-favicon-kilim4iks-projects.vercel.app/wallet.svg"
-        width={120}
-        height={120}
-      />
+      <div style={{ fontSize: 120 }}>💰</div>
       <div style={{ color: "#fff", fontSize: 64, fontWeight: 700 }}>
         SpotTracker
       </div>
