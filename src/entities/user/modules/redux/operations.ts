@@ -1,10 +1,11 @@
-import { auth } from "../../libs/firebase/auth";
+import { auth, provider } from "../../libs/firebase/auth";
 import { db } from "../../libs/firebase/db";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
   getIdToken,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -63,6 +64,24 @@ export const loginUser = createAsyncThunk<
       uid: user.user.uid,
       email: user.user.email ?? "",
       login: user.user.displayName ?? "",
+    };
+  } catch (e: any) {
+    return rejectWithValue({ message: handleFirebaseError(e.message) });
+  }
+});
+export const loginUserWithGoogle = createAsyncThunk<
+  IUser,
+  void,
+  { rejectValue: IError }
+>("user/loginUserWithGoogle", async (_, { rejectWithValue }) => {
+  try {
+    const res = await signInWithPopup(auth, provider);
+    const user = res?.user;
+    console.log("user :>> ", user);
+    return {
+      uid: user.uid,
+      email: user.email ?? "",
+      login: user.displayName ?? "",
     };
   } catch (e: any) {
     return rejectWithValue({ message: handleFirebaseError(e.message) });

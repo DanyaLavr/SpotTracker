@@ -12,6 +12,7 @@ import { IAuthConfig } from "@/shared/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
 import { setAuthError } from "@/entities/user/modules/redux/userSlice";
+import { loginUserWithGoogle } from "@/entities/user/modules/redux/operations";
 interface IProps<T extends Record<string, any>> {
   config: IAuthConfig<T>;
   onSubmit: (values: T) => Promise<void>;
@@ -47,7 +48,9 @@ export default function AuthForm<T extends Record<string, any>>({
             {error}
           </div>
         )}
-
+        <button type="button" onClick={() => dispatch(loginUserWithGoogle())}>
+          Sign in with Google
+        </button>
         <div className="flex gap-8 items-center justify-self-end ">
           <Link className="underline" href={link.path} replace>
             {link.name}
