@@ -2,9 +2,9 @@
 import { ErrorMessage, Field, useFormikContext } from "formik";
 import styles from "./formik.module.css";
 import { ChangeEvent, useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
 import { IBaseInput } from "@/shared/types";
-import { sendVerificationCode } from "@/entities/user/modules/sendVerificationCode";
+import CodeButton from "./CodeButton";
+import PasswordButton from "./PasswordButton";
 
 interface IProps extends IBaseInput {
   onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -37,23 +37,12 @@ export default function FormItem({
           placeholder={placeholder || name[0].toUpperCase() + name.slice(1)}
           {...(onChange && { onChange })}
         />
-        {isCode && (
-          <button
-            type="button"
-            onClick={() => sendVerificationCode(values.email)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
-          >
-            Send code
-          </button>
-        )}
+        {isCode && <CodeButton email={values.email} />}
         {isPassword && (
-          <button
-            type="button"
+          <PasswordButton
             onClick={() => setShowPassword((prev) => !prev)}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
-          >
-            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-          </button>
+            showPassword={showPassword}
+          />
         )}
       </div>
       <ErrorMessage

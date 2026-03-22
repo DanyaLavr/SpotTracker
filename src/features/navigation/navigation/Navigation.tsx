@@ -15,7 +15,7 @@ export default function Navigation() {
     const isActive = pathname === href;
     return isActive
       ? `${LINK_STYLES} underline`
-      : `${LINK_STYLES}  transition-transform duration-300 ease-in-out hover:scale-110 after:absolute after:bottom-2 after:left-0 after:h-0.5 after:w-0 after:rounded-full after:bg-current after:transition-all after:duration-300 after:ease-in-out hover:after:w-full`;
+      : `${LINK_STYLES} transition-transform duration-300 ease-in-out hover:scale-110 after:absolute after:bottom-3.5 after:left-0 after:h-0.5 after:z-1 after:w-0 after:rounded-full after:bg-current after:transition-all after:duration-300 after:ease-in-out hover:after:w-full`;
   };
 
   return (
