@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { onAuthStateChanged, getRedirectResult } from "firebase/auth";
-import { auth } from "@/entities/user/libs/firebase/auth";
+import { auth } from "./auth";
 import { loginUser } from "../../modules/redux/operations";
 import { useAppDispatch } from "@/store/hooks";
 import { useRouter } from "next/navigation";
@@ -14,25 +14,25 @@ export default function AutoLogin() {
   useEffect(() => {
     let isRedirect = false;
 
-    // getRedirectResult(auth)
-    //   .then((res) => {
-    //     console.log("getRedirectResult :>>", res);
-    //     if (!res) return;
+    getRedirectResult(auth)
+      .then((res) => {
+        console.log("getRedirectResult :>>", res);
+        if (!res) return;
 
-    //     isRedirect = true;
-    //     const user = res.user;
-    //     dispatch(
-    //       setUser({
-    //         uid: user.uid,
-    //         email: user.email ?? "",
-    //         login: user.displayName ?? "",
-    //       }),
-    //     );
+        isRedirect = true;
+        const user = res.user;
+        dispatch(
+          setUser({
+            uid: user.uid,
+            email: user.email ?? "",
+            login: user.displayName ?? "",
+          }),
+        );
 
-    //     router.replace("/");
-    //     router.refresh();
-    //   })
-    //   .catch(console.error);
+        router.replace("/");
+        router.refresh();
+      })
+      .catch(console.error);
     const getter = async () => {
       const res = await getRedirectResult(auth);
       console.log("res :>> ", res);

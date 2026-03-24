@@ -76,21 +76,22 @@ export const loginUserWithGoogle = createAsyncThunk<
   { rejectValue: IError }
 >("user/loginUserWithGoogle", async (_, { rejectWithValue }) => {
   try {
-    const res = await signInWithPopup(auth, provider);
-    const user = res.user;
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
+    if (isMobile) {
+      await signInWithRedirect(auth, provider);
+      return {} as IUser;
+    }
+
+    const res = await signInWithPopup(auth, provider);
+    const user = res?.user;
+    console.log("user :>> ", user);
     return {
       uid: user.uid,
       email: user.email ?? "",
       login: user.displayName ?? "",
     };
   } catch (e: any) {
-    console.log("loginUserWithGoogle error :>>", e.code, e.message); // что здесь?
-
-    if (e.code === "auth/popup-blocked") {
-      await signInWithRedirect(auth, provider);
-      return {} as IUser;
-    }
     return rejectWithValue({ message: handleFirebaseError(e.message) });
   }
 });
