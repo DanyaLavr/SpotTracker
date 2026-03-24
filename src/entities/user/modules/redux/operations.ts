@@ -6,6 +6,7 @@ import {
   getIdToken,
   signInWithEmailAndPassword,
   signInWithPopup,
+  signInWithRedirect,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -76,17 +77,24 @@ export const loginUserWithGoogle = createAsyncThunk<
 >("user/loginUserWithGoogle", async (_, { rejectWithValue }) => {
   try {
     const res = await signInWithPopup(auth, provider);
-    const user = res?.user;
-    console.log("user :>> ", user);
+    const user = res.user;
+
     return {
       uid: user.uid,
       email: user.email ?? "",
       login: user.displayName ?? "",
     };
   } catch (e: any) {
+    console.log("loginUserWithGoogle error :>>", e.code, e.message); // что здесь?
+
+    if (e.code === "auth/popup-blocked") {
+      await signInWithRedirect(auth, provider);
+      return {} as IUser;
+    }
     return rejectWithValue({ message: handleFirebaseError(e.message) });
   }
 });
+
 export const logoutUser = createAsyncThunk<void, void, { rejectValue: IError }>(
   "user/logoutUser",
   async (_, { rejectWithValue }) => {

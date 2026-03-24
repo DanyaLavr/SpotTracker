@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
 import { setAuthError } from "@/entities/user/modules/redux/userSlice";
 import { loginUserWithGoogle } from "@/entities/user/modules/redux/operations";
+import { useRouter } from "next/navigation";
 interface IProps<T extends Record<string, any>> {
   config: IAuthConfig<T>;
   onSubmit: (values: T) => Promise<void>;
@@ -24,6 +25,7 @@ export default function AuthForm<T extends Record<string, any>>({
   const loading = useAppSelector(selectUserIsLoading);
   const error = useAppSelector(selectUserError);
   const dispatch = useAppDispatch();
+  const router = useRouter();
   useEffect(() => {
     dispatch(setAuthError(null));
   }, []);
@@ -48,7 +50,15 @@ export default function AuthForm<T extends Record<string, any>>({
             {error}
           </div>
         )}
-        <button type="button" onClick={() => dispatch(loginUserWithGoogle())}>
+        <button
+          type="button"
+          onClick={() => {
+            // router.replace("/");
+            // router.refresh();
+            dispatch(loginUserWithGoogle()).unwrap();
+            router.replace("/");
+          }}
+        >
           Sign in with Google
         </button>
         <div className="flex gap-8 items-center justify-self-end ">
