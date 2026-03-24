@@ -6,8 +6,8 @@ export async function getCryptos() {
   for (let i = 0; i < MAX_KEYS; i++) {
     try {
       return await fetchCryptos(1, i);
-    } catch (e) {
-      // if (e?.code === 10006) continue;
+    } catch (e: any) {
+      if (e?.code === 10006) continue;
       throw e;
     }
   }

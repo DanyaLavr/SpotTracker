@@ -13,8 +13,10 @@ export const fetchCryptos = async (
   const data = await res.json();
 
   if (data?.status?.error_code === 10006) {
-    const err = new Error("API key rate limit exceeded");
-    // err.code = 10006;
+    const err = new Error("API key rate limit exceeded") as Error & {
+      code: number;
+    };
+    err.code = 10006;
     throw err;
   }
   let cryptos = [];
