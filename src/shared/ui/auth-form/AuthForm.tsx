@@ -39,12 +39,12 @@ export default function AuthForm<T extends Record<string, any>>({
   const { initialValues, validationSchema, inputs, link, button } = config;
 
   const handleGoogleSignIn = async () => {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
-    if (isMobile) {
-      await signInWithRedirect(auth, provider);
-      return;
-    }
+    // if (isMobile) {
+    //   await signInWithRedirect(auth, provider);
+    //   return;
+    // }
 
     const res = await signInWithPopup(auth, provider);
     if (!res?.user) return;
