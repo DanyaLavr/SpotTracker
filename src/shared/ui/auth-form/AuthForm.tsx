@@ -38,21 +38,6 @@ export default function AuthForm<T extends Record<string, any>>({
 
   const { initialValues, validationSchema, inputs, link, button } = config;
 
-  useEffect(() => {
-    getRedirectResult(auth).then((result) => {
-      console.log("result :>> ", result);
-      if (result?.user) {
-        console.log("result?.user :>> ", result?.user);
-        const { uid, email, displayName } = result.user;
-        dispatch(
-          setUser({ uid, email: email ?? "", login: displayName ?? "" }),
-        );
-        router.replace("/");
-      }
-    });
-    dispatch(setAuthError(null));
-  }, [dispatch]);
-
   const handleGoogleSignIn = async () => {
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
