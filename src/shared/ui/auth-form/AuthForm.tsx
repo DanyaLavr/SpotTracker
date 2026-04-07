@@ -8,17 +8,16 @@ import {
 
 import Link from "next/link";
 import { FormItem, Button } from "@/shared/ui";
-import { IAuthConfig, IUser } from "@/shared/types";
+import { IAuthConfig } from "@/shared/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
 import { setAuthError, setUser } from "@/entities/user/modules/redux/userSlice";
 import { useRouter } from "next/navigation";
-import {
-  getRedirectResult,
-  signInWithPopup,
-  signInWithRedirect,
-} from "firebase/auth";
+import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/entities/user/libs/firebase/auth";
+
+import Google from "@/shared/ui/Google.svg";
+
 interface IProps<T extends Record<string, any>> {
   config: IAuthConfig<T>;
   onSubmit: (values: T) => Promise<void>;
@@ -39,13 +38,6 @@ export default function AuthForm<T extends Record<string, any>>({
   const { initialValues, validationSchema, inputs, link, button } = config;
 
   const handleGoogleSignIn = async () => {
-    // const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    // if (isMobile) {
-    //   await signInWithRedirect(auth, provider);
-    //   return;
-    // }
-
     const res = await signInWithPopup(auth, provider);
     if (!res?.user) return;
 
@@ -73,9 +65,24 @@ export default function AuthForm<T extends Record<string, any>>({
             {error}
           </div>
         )}
-        <button type="button" onClick={handleGoogleSignIn}>
+
+        <div className="flex items-center gap-4">
+          <div className="h-px flex-1 bg-zinc-200" />
+          <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest">
+            or
+          </span>
+          <div className="h-px flex-1 bg-zinc-200" />
+        </div>
+
+        <button
+          type="button"
+          onClick={handleGoogleSignIn}
+          className="flex items-center justify-center gap-3 w-full rounded-xl border-2 border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md active:scale-[0.98]"
+        >
+          <Google />
           Sign in with Google
         </button>
+
         <div className="flex gap-8 items-center justify-self-end ">
           <Link className="underline" href={link.path} replace>
             {link.name}
