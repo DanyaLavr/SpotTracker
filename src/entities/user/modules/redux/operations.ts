@@ -71,25 +71,24 @@ export const loginUser = createAsyncThunk<
   }
 });
 export const loginUserWithGoogle = createAsyncThunk<
-  IUser,
+  IUser & { meta: { creationTime: string; lastSignInTime: string } },
   void,
   { rejectValue: IError }
 >("user/loginUserWithGoogle", async (_, { rejectWithValue }) => {
   try {
-    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
-
-    if (isMobile) {
-      await signInWithRedirect(auth, provider);
-      return {} as IUser;
-    }
-
     const res = await signInWithPopup(auth, provider);
     const user = res?.user;
-    console.log("user :>> ", user);
+    const token = await getIdToken(user);
+
+    await axios.post("/api/auth/login", { token });
     return {
       uid: user.uid,
       email: user.email ?? "",
       login: user.displayName ?? "",
+      meta: {
+        creationTime: user.metadata.creationTime ?? "",
+        lastSignInTime: user.metadata.lastSignInTime ?? "",
+      },
     };
   } catch (e: any) {
     return rejectWithValue({ message: handleFirebaseError(e.message) });

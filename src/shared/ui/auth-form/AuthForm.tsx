@@ -15,8 +15,7 @@ import { setAuthError, setUser } from "@/entities/user/modules/redux/userSlice";
 import { useRouter } from "next/navigation";
 import { signInWithPopup } from "firebase/auth";
 import { auth, provider } from "@/entities/user/libs/firebase/auth";
-
-import Google from "@/shared/ui/Google.svg";
+import GoogleButton from "./GoogleButton";
 
 interface IProps<T extends Record<string, any>> {
   config: IAuthConfig<T>;
@@ -29,7 +28,6 @@ export default function AuthForm<T extends Record<string, any>>({
   const loading = useAppSelector(selectUserIsLoading);
   const error = useAppSelector(selectUserError);
   const dispatch = useAppDispatch();
-  const router = useRouter();
 
   useEffect(() => {
     dispatch(setAuthError(null));
@@ -37,14 +35,6 @@ export default function AuthForm<T extends Record<string, any>>({
 
   const { initialValues, validationSchema, inputs, link, button } = config;
 
-  const handleGoogleSignIn = async () => {
-    const res = await signInWithPopup(auth, provider);
-    if (!res?.user) return;
-
-    const { uid, email, displayName } = res.user;
-    dispatch(setUser({ uid, email: email ?? "", login: displayName ?? "" }));
-    router.replace("/");
-  };
   return (
     <Formik<T>
       initialValues={initialValues}
@@ -74,14 +64,7 @@ export default function AuthForm<T extends Record<string, any>>({
           <div className="h-px flex-1 bg-zinc-200" />
         </div>
 
-        <button
-          type="button"
-          onClick={handleGoogleSignIn}
-          className="flex items-center justify-center gap-3 w-full rounded-xl border-2 border-zinc-200 bg-white px-4 py-3 text-sm font-semibold text-zinc-700 shadow-sm transition-all hover:border-zinc-300 hover:shadow-md active:scale-[0.98]"
-        >
-          <Google />
-          Sign in with Google
-        </button>
+        <GoogleButton />
 
         <div className="flex gap-8 items-center justify-self-end ">
           <Link className="underline" href={link.path} replace>
