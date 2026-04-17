@@ -21,8 +21,9 @@ const userSlice = createSlice({
   name: "user",
   initialState: USER_STATE,
   reducers: {
-    autoLogin: (state, action) => {
+    setUser: (state, action) => {
       state.user = action.payload;
+      state.isLoadingUser = false;
     },
     setAuthError: (state, action: PayloadAction<string | null>) => {
       state.errorUser = action.payload;
@@ -112,5 +113,5 @@ const userSlice = createSlice({
       });
   },
 });
-export const { autoLogin, setAuthError } = userSlice.actions;
+export const { setUser, setAuthError } = userSlice.actions;
 export const userReducer = userSlice.reducer;

@@ -1,10 +1,12 @@
-import { auth } from "../../libs/firebase/auth";
+import { auth, provider } from "../../libs/firebase/auth";
 import { db } from "../../libs/firebase/db";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   createUserWithEmailAndPassword,
   getIdToken,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  signInWithRedirect,
   signOut,
   updateProfile,
 } from "firebase/auth";
@@ -68,6 +70,31 @@ export const loginUser = createAsyncThunk<
     return rejectWithValue({ message: handleFirebaseError(e.message) });
   }
 });
+export const loginUserWithGoogle = createAsyncThunk<
+  IUser & { meta: { creationTime: string; lastSignInTime: string } },
+  void,
+  { rejectValue: IError }
+>("user/loginUserWithGoogle", async (_, { rejectWithValue }) => {
+  try {
+    const res = await signInWithPopup(auth, provider);
+    const user = res?.user;
+    const token = await getIdToken(user);
+
+    await axios.post("/api/auth/login", { token });
+    return {
+      uid: user.uid,
+      email: user.email ?? "",
+      login: user.displayName ?? "",
+      meta: {
+        creationTime: user.metadata.creationTime ?? "",
+        lastSignInTime: user.metadata.lastSignInTime ?? "",
+      },
+    };
+  } catch (e: any) {
+    return rejectWithValue({ message: handleFirebaseError(e.message) });
+  }
+});
+
 export const logoutUser = createAsyncThunk<void, void, { rejectValue: IError }>(
   "user/logoutUser",
   async (_, { rejectWithValue }) => {

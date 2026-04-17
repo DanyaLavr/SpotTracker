@@ -11,7 +11,6 @@ export const fetchCryptos = async (
     { next: { revalidate: 300 } },
   );
   const data = await res.json();
-
   if (data?.status?.error_code === 10006) {
     const err = new Error("API key rate limit exceeded") as Error & {
       code: number;

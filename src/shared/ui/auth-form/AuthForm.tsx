@@ -11,7 +11,12 @@ import { FormItem, Button } from "@/shared/ui";
 import { IAuthConfig } from "@/shared/types";
 import { useAppDispatch, useAppSelector } from "@/store/hooks";
 import { useEffect } from "react";
-import { setAuthError } from "@/entities/user/modules/redux/userSlice";
+import { setAuthError, setUser } from "@/entities/user/modules/redux/userSlice";
+import { useRouter } from "next/navigation";
+import { signInWithPopup } from "firebase/auth";
+import { auth, provider } from "@/entities/user/libs/firebase/auth";
+import GoogleButton from "./GoogleButton";
+
 interface IProps<T extends Record<string, any>> {
   config: IAuthConfig<T>;
   onSubmit: (values: T) => Promise<void>;
@@ -23,10 +28,13 @@ export default function AuthForm<T extends Record<string, any>>({
   const loading = useAppSelector(selectUserIsLoading);
   const error = useAppSelector(selectUserError);
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(setAuthError(null));
   }, []);
+
   const { initialValues, validationSchema, inputs, link, button } = config;
+
   return (
     <Formik<T>
       initialValues={initialValues}
@@ -47,6 +55,16 @@ export default function AuthForm<T extends Record<string, any>>({
             {error}
           </div>
         )}
+
+        <div className="flex items-center gap-4">
+          <div className="h-px flex-1 bg-zinc-200" />
+          <span className="text-xs font-medium text-zinc-400 uppercase tracking-widest">
+            or
+          </span>
+          <div className="h-px flex-1 bg-zinc-200" />
+        </div>
+
+        <GoogleButton />
 
         <div className="flex gap-8 items-center justify-self-end ">
           <Link className="underline" href={link.path} replace>

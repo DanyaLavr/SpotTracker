@@ -1,33 +1,27 @@
 "use client";
 import { useEffect } from "react";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "@/entities/user/libs/firebase/auth";
-import { loginUser } from "../../modules/redux/operations";
+import { auth } from "./auth";
 import { useAppDispatch } from "@/store/hooks";
+import { setUser } from "../../modules/redux/userSlice";
 
 export default function AutoLogin() {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         dispatch(
-          loginUser.fulfilled(
-            {
-              uid: user.uid,
-              email: user.email!,
-              login: user.displayName!,
-            },
-            "auth/auto-login",
-            {
-              email: "",
-              password: "",
-            },
-          ),
+          setUser({
+            uid: user.uid,
+            email: user.email ?? "",
+            login: user.displayName ?? "",
+          }),
         );
       }
     });
-  }, []);
 
+    return () => unsubscribe();
+  }, []);
   return null;
 }
